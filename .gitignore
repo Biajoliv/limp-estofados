@@ -1,0 +1,14 @@
+# --- IDEs ---
+.vscode/
+.idea/
+*.iml
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+
+# --- Configuração local / segredos ---
+.env
+
+# --- Docker ---
+docker-data/
