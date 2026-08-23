@@ -49,6 +49,7 @@ public class SolicitacaoService {
         // Implementação do envio de e-mail usando javaMailSender
         // Aqui você pode criar o conteúdo do e-mail e enviá-lo para o administrador
         SimpleMailMessage mensagem = new SimpleMailMessage();
+
         mensagem.setTo("admin@example.com");
         mensagem.setSubject("Nova Solicitação de Orçamento");
         mensagem.setText("Uma nova solicitação de orçamento foi criada:\n\n" +
