@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de API — Limpeza de Estofados</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 640px;
+            margin: 40px auto;
+            padding: 0 16px;
+            color: #222;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            margin-top: 2.5rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 4px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 16px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        #catalogo li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 12px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+        }
+
+        .erro {
+            color: #b00020;
+        }
+
+        .sucesso {
+            color: #146c2e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Página de teste — não é o frontend final</h1>
+    <p>Ferramenta descartável só para validar os endpoints do backend visualmente.</p>
+
+    <h2>Catálogo de serviços (GET /api/v1/services)</h2>
+    <button onclick="carregarCatalogo()">Recarregar catálogo</button>
+    <ul id="catalogo"></ul>
+
+    <h2>Solicitar orçamento (POST /api/v1/quotes)</h2>
+    <form id="formOrcamento">
+        <label>Serviço
+            <select id="servicoId" required></select>
+        </label>
+        <label>Nome
+            <input type="text" id="nome" required>
+        </label>
+        <label>Telefone
+            <input type="text" id="telefone" required>
+        </label>
+        <label>Cidade
+            <input type="text" id="cidade" required>
+        </label>
+        <label>
+            <input type="checkbox" id="consentimentoLgpd" required style="width:auto; display:inline-block;">
+            Aceito o tratamento dos meus dados
+        </label>
+        <button type="submit">Enviar solicitação</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        const API_BASE = "http://localhost:8080/api/v1";
+
+        async function carregarCatalogo() {
+            const lista = document.getElementById("catalogo");
+            const select = document.getElementById("servicoId");
+            lista.innerHTML = "Carregando...";
+            select.innerHTML = "";
+
+            try {
+                const resp = await fetch(`${API_BASE}/services`);
+                const servicos = await resp.json();
+
+                lista.innerHTML = servicos.length === 0
+                    ? "<li>Nenhum serviço ativo encontrado.</li>"
+                    : "";
+
+                servicos.forEach(s => {
+                    const li = document.createElement("li");
+                    li.textContent = `#${s.id} — ${s.nome}: ${s.descricao}`;
+                    lista.appendChild(li);
+
+                    const option = document.createElement("option");
+                    option.value = s.id;
+                    option.textContent = `#${s.id} — ${s.nome}`;
+                    select.appendChild(option);
+                });
+            } catch (err) {
+                lista.innerHTML = `<li class="erro">Erro ao carregar catálogo: ${err.message}</li>`;
+            }
+        }
+
+        document.getElementById("formOrcamento").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const resultado = document.getElementById("resultado");
+            resultado.innerHTML = "Enviando...";
+
+            const payload = {
+                servicoId: Number(document.getElementById("servicoId").value),
+                nome: document.getElementById("nome").value,
+                telefone: document.getElementById("telefone").value,
+                cidade: document.getElementById("cidade").value,
+                consentimentoLgpd: document.getElementById("consentimentoLgpd").checked
+            };
+
+            try {
+                const resp = await fetch(`${API_BASE}/quotes`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await resp.json();
+
+                if (resp.ok) {
+                    resultado.innerHTML = `<p class="sucesso">Sucesso (${resp.status})</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    resultado.innerHTML = `<p class="erro">Erro (${resp.status})</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (err) {
+                resultado.innerHTML = `<p class="erro">Falha na requisição: ${err.message}</p>`;
+            }
+        });
+
+        carregarCatalogo();
+    </script>
+
+</body>
+
+</html>
