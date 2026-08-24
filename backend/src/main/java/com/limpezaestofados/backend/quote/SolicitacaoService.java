@@ -31,6 +31,9 @@ public class SolicitacaoService {
         if (servicoEncontrado.isEmpty() || !servicoEncontrado.get().isAtivo()) {
             throw new IllegalArgumentException("Serviço não disponível");
         }
+
+        solicitacao.setServico(servicoEncontrado.get()); // define o serviço encontrado na solicitação
+
         // salva solicitação no banco de dados
         Solicitacao solicitacaoSalva = solicitacaoRepository.save(solicitacao); // objeto do tipo Solicitacao salvo no
                                                                                 // banco de dados
