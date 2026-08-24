@@ -1,0 +1,15 @@
+CREATE TABLE servicos (
+    id BIGSERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE solicitacao_orcamento (
+    id BIGSERIAL PRIMARY KEY,
+    servico_id BIGINT NOT NULL REFERENCES servicos(id),
+    nome VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    cidade VARCHAR(255) NOT NULL,
+    criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
