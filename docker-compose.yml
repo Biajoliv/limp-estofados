@@ -5,13 +5,15 @@ services:
     ports:
       - "8080:8080"
     environment:
+      # Essas variáveis de ambiente serão lidas pelo seu backend (Spring Boot, etc.)
       DB_HOST: db
       DB_PORT: 5432
       DB_NAME: ${POSTGRES_DB}
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
-      - db
+      db: # <-- Mudança aqui
+        condition: service_healthy # <-- Espera o healthcheck do 'db' passar
 
   db:
     image: postgres:16
@@ -21,6 +23,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck: # <-- Adição importante aqui
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:
