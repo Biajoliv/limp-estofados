@@ -32,7 +32,6 @@ a mesma coisa: o RF é o "o quê" (do ponto de vista do usuário), o componente 
 
 | Decisão | Por quê |
 |---|---|
-| Frontend e backend desacoplados (API REST, sem SSR) | Time só tem conhecimento de backend; um contrato de API bem definido (`api-contract.md`) permite que quem cuidar do frontend trabalhe sem depender de Java. |
 | Catálogo (`Servico`) em banco, não hardcoded | Há chance real de mudar a lista de serviços; evita precisar de deploy para isso. |
 | Sem autenticação nesta fase | Público-alvo é o visitante geral, sem necessidade de conta. |
 | E-mail de notificação **síncrono** (não assíncrono) | Volume baixo (~20 acessos/dia) não justifica a complexidade de evento/listener. Protegido por `try/catch`: falha no envio não derruba a solicitação já persistida. |
