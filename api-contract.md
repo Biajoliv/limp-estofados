@@ -9,6 +9,7 @@
 ## Convenções gerais
 
 - Prefixo de versão: `/api/v1`
+- CORS habilitado para `localhost`/`127.0.0.1` em qualquer porta (ambiente de desenvolvimento)
 - Formato de erro padrão, usado em toda a API:
 
 ```json
@@ -68,7 +69,16 @@
 ```json
 {
   "id": 42,
-  "mensagem": "Solicitação recebida com sucesso. Em breve entraremos em contato."
+  "cidade": "Bauru",
+  "criadoEm": "2026-08-24T00:59:21.370917222",
+  "nome": "Maria",
+  "telefone": "33991811440",
+  "servico": {
+    "id": 1,
+    "nome": "Limpeza de sofá",
+    "descricao": "Limpeza profunda a seco ou com extração",
+    "ativo": true
+  }
 }
 ```
 

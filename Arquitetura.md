@@ -15,27 +15,32 @@
 
 ### RF → componente responsável
 
-| RF | Descrição - Componente(s) |
+| RF | Descrição | Componente(s) |
 |---|---|---|
 | RF01 | Listar catálogo de serviços | Backend (`GET /services`) + Banco |
 | RF02 | Exibir nome/descrição do serviço | Frontend (renderiza o que o Backend retorna) |
 | RF03 | Link de contato via WhatsApp | Frontend (link estático, sem envolver o Backend) |
-
 | RF04 | Enviar solicitação de orçamento | Frontend (formulário) + Backend (valida/persiste) + Banco |
 | RF05 | Persistir a solicitação | Backend + Banco |
 | RF06 | Notificar responsável por e-mail | Backend + SMTP |
 
+Cada RF pode envolver mais de um componente — é por isso que RF e componente não são
+a mesma coisa: o RF é o "o quê" (do ponto de vista do usuário), o componente é o
+"onde" tecnicamente isso é implementado.
 
 ## 2. Decisões-chave
 
 | Decisão | Por quê |
 |---|---|
-| Frontend e backend desacoplados (API REST, sem SSR) | um contrato de API bem definido (`api-contract.md`) permite que quem cuidar do frontend trabalhe sem depender de Java. |
+| Frontend e backend desacoplados (API REST, sem SSR) | Time só tem conhecimento de backend; um contrato de API bem definido (`api-contract.md`) permite que quem cuidar do frontend trabalhe sem depender de Java. |
 | Catálogo (`Servico`) em banco, não hardcoded | Há chance real de mudar a lista de serviços; evita precisar de deploy para isso. |
 | Sem autenticação nesta fase | Público-alvo é o visitante geral, sem necessidade de conta. |
 | E-mail de notificação **síncrono** (não assíncrono) | Volume baixo (~20 acessos/dia) não justifica a complexidade de evento/listener. Protegido por `try/catch`: falha no envio não derruba a solicitação já persistida. |
 | Honeypot em vez de rate limiting | Volume baixo torna rate limiting dedicado desnecessário; honeypot já cobre abuso automatizado simples. |
-| `Dockerfile` **single-stage** (não multi-stage) | Simplicidade para o time: exige rodar `mvn package` manualmente antes do `docker build`. **Trade-off aceito conscientemente** — ver nota no RNF05 (seção 7). Multi-stage fica como melhoria futura. |
+| `Dockerfile` **multi-stage** | Testado na prática: o single-stage exigia lembrar de rodar `mvn package` manualmente antes de cada `docker build`, e builds desatualizados passaram despercebidos mais de uma vez. Revertido para multi-stage — o Maven roda dentro do próprio build da imagem, artefato sempre consistente. |
+| `docker-compose`: healthcheck no banco + `depends_on: condition: service_healthy` | Substitui o `restart: on-failure` isolado do `app`. Evita o container da aplicação crashar na primeira tentativa de conexão; `restart: on-failure` foi mantido como reforço adicional. |
+| `ddl-auto=update` (temporário, não `validate`) | O Flyway foi adicionado (dependência + migration `V1`), mas a integração completa via Docker ainda não foi validada de ponta a ponta (problemas de cache de build mascararam o diagnóstico). Para destravar os testes, o Hibernate está gerenciando o schema temporariamente. **Reverter para `validate` assim que o Flyway for confirmado funcionando dentro do container.** |
+| CORS configurado (`CorsConfig`) | Implementado — libera origens `localhost`/`127.0.0.1` em qualquer porta, para desenvolvimento. Restringir para a origem real do frontend antes de produção. |
 
 ## 3. Fluxo crítico: solicitação de orçamento
 
@@ -86,7 +91,7 @@ contínua (ex: Neon + Render, ou RDS/ALB na própria AWS).
 | RNF02 (segurança) | Honeypot no `POST /api/v1/quotes`. |
 | RNF03 (confiabilidade) | E-mail síncrono protegido por `try/catch` (seção 2–3). |
 | RNF04 (LGPD) | Checkbox de consentimento no formulário + campo no payload. |
-| RNF05 (portabilidade) | `docker-compose.yml` versionado — **porém** exige `mvn package` manual antes do build, já que o Dockerfile é single-stage (seção 2). Revisar se isso incomodar no dia a dia do time. |
+| RNF05 (portabilidade) | `docker-compose.yml` versionado, Dockerfile multi-stage — `docker compose up --build` sozinho é suficiente, sem passo manual. |
 | RNF06 (usabilidade mobile) | Responsabilidade do frontend. |
 
 ## 9. Riscos
@@ -94,4 +99,4 @@ contínua (ex: Neon + Render, ou RDS/ALB na própria AWS).
 - E-mail síncrono adiciona latência; aceitável no volume atual, revisar se crescer.
 - EC2 única ligada/desligada manualmente não serve para disponibilidade contínua.
 - Sem backup automatizado do banco — considerar `pg_dump` periódico se dados reais se acumularem.
-- Dockerfile single-stage exige passo manual (`mvn package`) — se isso gerar atrito real no time, migrar para multi-stage.
+- `ddl-auto=update` é uma prática frágil a médio prazo (Hibernate gerenciando schema automaticamente) — pendência real até o Flyway ser validado dentro do Docker e o `validate` ser restaurado.
