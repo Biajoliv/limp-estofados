@@ -182,7 +182,7 @@
 
             </div>
 
-            <div class="campo-orcamento">
+            <div class="campo-orcamento" id="campo-tamanho">
 
                 <label for="tamanho">
                     Tamanho
@@ -204,6 +204,30 @@
 
                     <option value="grande">
                         Grande
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="campo-orcamento" id="campo-tipo-cadeira" style="display: none;">
+
+                <label for="tipo-cadeira">
+                    Tipo da cadeira
+                </label>
+
+                <select id="tipo-cadeira">
+
+                    <option value="">
+                        Selecione o tipo
+                    </option>
+
+                    <option value="assento">
+                        Só assento
+                    </option>
+
+                    <option value="assento-encosto">
+                        Assento + encosto
                     </option>
 
                 </select>
@@ -320,6 +344,64 @@
     </p>
 
 </footer>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const destino = document.querySelector(this.getAttribute('href'));
+
+            if (!destino) return;
+
+            const inicio = window.scrollY;
+            const fim = destino.getBoundingClientRect().top + window.scrollY;
+            const distancia = fim - inicio;
+            const duracao = 900;
+            let inicioTempo = null;
+
+            function animar(tempoAtual) {
+                if (!inicioTempo) inicioTempo = tempoAtual;
+
+                const progresso = Math.min(
+                    (tempoAtual - inicioTempo) / duracao,
+                    1
+                );
+
+                const suavizado = progresso < 0.5
+                    ? 2 * progresso * progresso
+                    : 1 - Math.pow(-2 * progresso + 2, 2) / 2;
+
+                window.scrollTo(
+                    0,
+                    inicio + distancia * suavizado
+                );
+
+                if (progresso < 1) {
+                    requestAnimationFrame(animar);
+                }
+            }
+
+            requestAnimationFrame(animar);
+        });
+    });
+
+    const servico = document.getElementById("servico");
+    const campoTamanho = document.getElementById("campo-tamanho");
+    const campoTipoCadeira = document.getElementById("campo-tipo-cadeira");
+
+    servico.addEventListener("change", function() {
+
+        if (this.value === "cadeira") {
+            campoTamanho.style.display = "none";
+            campoTipoCadeira.style.display = "flex";
+        } else {
+            campoTamanho.style.display = "flex";
+            campoTipoCadeira.style.display = "none";
+        }
+
+    });
+</script>
 
 </body>
 </html>

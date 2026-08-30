@@ -11,6 +11,19 @@ nav {
     background-color: #061b2e;
 }
 
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px 40px;
+    align-items: center;
+    background-color: #061b2e;
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -239,13 +252,21 @@ h2 {
 #sobre {
     text-align: center;
     background-color: #f5f5f5;
+    padding: 70px 20px;
+}
+
+#sobre h2 {
+    font-size: 32px;
+    color: #061b2e;
+    margin: 0 0 20px;
 }
 
 #sobre p {
-    max-width: 700px;
+    max-width: 750px;
     margin: 0 auto;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #536273;
 }
 
 #orcamento {
@@ -255,21 +276,22 @@ h2 {
 }
 
 #orcamento h2 {
-    font-size: 30px;
+    font-size: 32px;
     color: #061b2e;
-    margin: 0 0 5px;
+    margin: 0 0 8px;
 }
 
 #orcamento > p {
-    margin: 0 0 20px;
-    font-size: 14px;
+    margin: 0 0 24px;
+    font-size: 15px;
     color: #536273;
+    line-height: 1.5;
 }
 
 .caixa-orcamento {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 28px 35px 22px;
+    padding: 24px 28px 20px;
     background-color: #eef6ff;
     border-radius: 14px;
     box-sizing: border-box;
@@ -307,14 +329,22 @@ h2 {
 .campo-orcamento select,
 .campo-orcamento input {
     width: 100%;
-    height: 42px;
-    padding: 0 12px;
+    height: 44px;
+    padding: 0 13px;
     font-size: 14px;
     border: 1px solid #d5dfe9;
-    border-radius: 6px;
+    border-radius: 7px;
     background-color: white;
     color: #061b2e;
     box-sizing: border-box;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.campo-orcamento select:focus,
+.campo-orcamento input:focus {
+    border-color: #2f8df5;
+    box-shadow: 0 0 0 2px rgba(47, 141, 245, 0.12);
 }
 
 .campo-orcamento input {
@@ -323,34 +353,38 @@ h2 {
 
 #calcular {
     height: 42px;
-    padding: 0 25px;
+    padding: 0 28px;
     font-size: 14px;
     font-weight: bold;
     color: white;
-    background-color: #061b2e;
+    background-color: #2f8df5;
     border: none;
     border-radius: 7px;
     cursor: pointer;
     transition: 0.3s ease;
     white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(47, 141, 245, 0.25);
 }
 
 #calcular:hover {
-    background-color: #2f8df5;
+    background-color: #2278d4;
+    transform: translateY(-2px);
 }
 
 #resultado {
     display: none;
-    align-items: center;
-    justify-content: space-between;
     max-width: 1100px;
-    min-height: 75px;
-    margin: 12px auto 0;
+    min-height: 70px;
+    margin: 18px auto 0;
     padding: 18px 25px;
-    background-color: #ffffff;
+    background-color: white;
+    border: 1px solid #e1e8f0;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     box-sizing: border-box;
+    color: #061b2e;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .resultado-icone {
@@ -392,14 +426,29 @@ h2 {
 }
 
 .aviso-orcamento {
-    margin-top: 12px !important;
-    font-size: 13px !important;
+    margin-top: 12px;
+    font-size: 13px;
     color: #536273;
 }
 
 #contato {
     text-align: center;
     background-color: #f5f5f5;
+    padding: 70px 20px;
+}
+
+#contato h2 {
+    font-size: 32px;
+    color: #061b2e;
+    margin: 0 0 25px;
+}
+
+#contato p {
+    max-width: 700px;
+    margin: 8px auto;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #536273;
 }
 
 footer {
@@ -417,10 +466,141 @@ footer {
     .card-servico {
         flex: 1 1 40%;
     }
+
+    .orcamento-form {
+        flex-wrap: wrap;
+    }
+
+    .campo-orcamento {
+        flex: 1 1 40%;
+    }
+
+    #calcular {
+        flex: 1 1 100%;
+    }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+    nav {
+        padding: 18px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .logo {
+        margin-right: 0;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: 14px;
+    }
+
+    #inicio {
+        flex-direction: column;
+    }
+
+    .inicio-texto {
+        width: 100%;
+        padding: 50px 25px;
+    }
+
+    .inicio-texto h1 {
+        font-size: 38px;
+    }
+
+    .inicio-texto p {
+        font-size: 16px;
+    }
+
+    .botoes-inicio {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .botao-whatsapp,
+    .botao-servicos {
+        text-align: center;
+    }
+
+    .inicio-imagem {
+        width: 100%;
+        min-height: 320px;
+    }
+
+    .inicio-imagem::before {
+        display: none;
+    }
+
+    .cards-servicos {
+        flex-direction: column;
+    }
+
     .card-servico {
         flex: 1 1 100%;
+        width: 100%;
+    }
+
+    #orcamento {
+        padding: 45px 15px;
+    }
+
+    .caixa-orcamento {
+        padding: 18px 15px;
+    }
+
+    .orcamento-form {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px 15px;
+    }
+
+    .campo-orcamento {
+        width: 100%;
+        flex: none;
+    }
+
+    #calcular {
+        width: 100%;
+        flex: none;
+    }
+
+    #sobre {
+        padding: 55px 20px;
+    }
+
+    #contato {
+        padding: 55px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .inicio-texto h1 {
+        font-size: 34px;
+    }
+
+    #servicos h2,
+    #sobre h2,
+    #orcamento h2,
+    #contato h2 {
+        font-size: 28px;
+    }
+
+    .icone-servico {
+        width: 55px;
+        min-width: 55px;
+        height: 55px;
+    }
+
+    .icone-servico img {
+        width: 55px;
+        height: 55px;
     }
 }
