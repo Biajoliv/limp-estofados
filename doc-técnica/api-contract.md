@@ -10,17 +10,19 @@
 
 - Prefixo de versão: `/api/v1`
 - CORS habilitado para `localhost`/`127.0.0.1` em qualquer porta (ambiente de desenvolvimento)
-- Formato de erro padrão, usado em toda a API:
+- Formato de erro padrão (RFC 7807 — Problem Details), usado em toda a API:
 
 ```json
 {
-  "codigo": "VALIDATION_ERROR",
-  "mensagem": "Descrição legível do erro",
-  "campo": "nomeDoCampoComProblema"
+  "type": "about:blank",
+  "title": "Erro de validação",
+  "status": 400,
+  "detail": "Descrição legível do erro",
+  "instance": "/api/v1/quotes"
 }
 ```
 
-- Autenticação: nenhuma. Todos os endpoints abaixo são públicos nesta fase.
+- Sem autenticação (a API é pública, não há login ou token)
 
 ## Endpoints
 
@@ -85,18 +87,22 @@
 **Response — erro de validação (400):**
 ```json
 {
-  "codigo": "VALIDATION_ERROR",
-  "mensagem": "Telefone é obrigatório",
-  "campo": "telefone"
+  "type": "about:blank",
+  "title": "Erro de validação",
+  "status": 400,
+  "detail": "Telefone é obrigatório",
+  "instance": "/api/v1/quotes"
 }
 ```
 
 **Response — serviço inexistente/inativo (400):**
 ```json
 {
-  "codigo": "SERVICO_INVALIDO",
-  "mensagem": "O serviço informado não existe ou não está mais disponível",
-  "campo": "servicoId"
+  "type": "about:blank",
+  "title": "Serviço inválido",
+  "status": 400,
+  "detail": "O serviço informado não existe ou não está mais disponível",
+  "instance": "/api/v1/quotes"
 }
 ```
 

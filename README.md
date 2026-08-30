@@ -21,17 +21,21 @@ Em planejamento.
 ## Contexto e objetivo
 
 O objetivo é gerar leads qualificados para uma empresa de limpeza de estofados:
-o visitante conhece os serviços oferecidos e solicita um orçamento informando
-dados básicos de contato. Não há fechamento de negócio nem pagamento dentro do
-sistema — a negociação final acontece manualmente, via WhatsApp, entre o
-responsável e o cliente.
+o visitante conhece os serviços oferecidos, vê fotos "antes e depois" dos
+trabalhos já realizados, e solicita um orçamento informando dados básicos de
+contato. Não há fechamento de negócio nem pagamento dentro do sistema — a
+negociação final acontece manualmente entre o responsável e o cliente.
 
-**Fora de escopo nesta fase:** autenticação de usuários, pagamento online, cálculo
-automático de distância/frete a partir do CEP, painel administrativo de gestão das
-solicitações, avaliações de clientes.
+Existem exatamente dois canais de contato: **formulário de orçamento** (formal,
+com registro persistido e notificação por e-mail) ou **WhatsApp** (informal,
+direto). Nenhum outro canal está previsto.
+
+**Possível melhoria futura:** calculadora para simular orçamento com base em
+dimensões do móvel/estofado e quantidade de lugares — estrutura ainda em definição.
 
 ## Documentação
 
+- **Novo no time / sem experiência com Docker?** [`GETTING_STARTED.md`](GETTING_STARTED.md) — guia passo a passo para instalar tudo e rodar o projeto.
 - Requisitos funcionais, não funcionais e regras de negócio: [`docs/spec.md`](docs/spec.md)
 - Desenho arquitetural, Docker e produção: [`docs/architecture.md`](docs/architecture.md)
 - Contrato da API (integração com o frontend): [`docs/api-contract.md`](docs/api-contract.md)
@@ -89,4 +93,4 @@ de pronto.
 
 ## Time
 
-<!-- Preencher com nome e papel de cada integrante conforme o time for definido -->
+<!-- Preencher com nome e papel de cada integrante -->
