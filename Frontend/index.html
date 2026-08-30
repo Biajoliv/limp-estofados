@@ -182,33 +182,105 @@
 
             </div>
 
-            <div class="campo-orcamento" id="campo-tamanho">
+            <!-- TAMANHO DO SOFÁ -->
 
-                <label for="tamanho">
-                    Tamanho
+            <div class="campo-orcamento" id="campo-tamanho-sofa" style="display: none;">
+
+                <label for="tamanho-sofa">
+                    Tamanho do sofá
                 </label>
 
-                <select id="tamanho">
+                <select id="tamanho-sofa">
 
                     <option value="">
                         Selecione o tamanho
                     </option>
 
-                    <option value="pequeno">
-                        Pequeno
+                    <option value="1.80-2.00">
+                        1,80 m - 2,00 m
                     </option>
 
-                    <option value="medio">
-                        Médio
+                    <option value="2.20-2.50">
+                        2,20 m - 2,50 m
                     </option>
 
-                    <option value="grande">
-                        Grande
+                    <option value="3.00-3.30">
+                        3,00 m - 3,30 m
                     </option>
 
                 </select>
 
             </div>
+
+            <!-- TAMANHO DO COLCHÃO -->
+
+            <div class="campo-orcamento" id="campo-tamanho-colchao" style="display: none;">
+
+                <label for="tamanho-colchao">
+                    Tamanho do colchão
+                </label>
+
+                <select id="tamanho-colchao">
+
+                    <option value="">
+                        Selecione o tamanho
+                    </option>
+
+                    <option value="solteiro">
+                        Solteiro
+                    </option>
+
+                    <option value="casal">
+                        Casal padrão
+                    </option>
+
+                    <option value="queen">
+                        Queen
+                    </option>
+
+                    <option value="king">
+                        King
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- TAMANHO DO TAPETE -->
+
+            <div class="campo-orcamento" id="campo-tamanho-tapete" style="display: none;">
+
+                <label for="tamanho-tapete">
+                    Tamanho do tapete
+                </label>
+
+                <select id="tamanho-tapete">
+
+                    <option value="">
+                        Selecione o tamanho
+                    </option>
+
+                    <option value="1.50x2.00">
+                        1,50 m × 2,00 m
+                    </option>
+
+                    <option value="2.00x2.50">
+                        2,00 m × 2,50 m
+                    </option>
+
+                    <option value="2.50x3.00">
+                        2,50 m × 3,00 m
+                    </option>
+
+                    <option value="3.00x3.50">
+                        3,00 m × 3,50 m
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- TIPO DE CADEIRA -->
 
             <div class="campo-orcamento" id="campo-tipo-cadeira" style="display: none;">
 
@@ -234,6 +306,24 @@
 
             </div>
 
+            <!-- OUTROS -->
+
+            <div class="campo-orcamento" id="campo-outros" style="display: none;">
+
+                <label for="outro-servico">
+                    O que você deseja higienizar?
+                </label>
+
+                <input
+                    type="text"
+                    id="outro-servico"
+                    placeholder="Ex.: puff, cabeceira, almofada..."
+                >
+
+            </div>
+
+            <!-- QUANTIDADE -->
+
             <div class="campo-orcamento">
 
                 <label for="quantidade">
@@ -248,6 +338,8 @@
                 >
 
             </div>
+
+            <!-- IMPERMEABILIZAÇÃO -->
 
             <div class="campo-orcamento">
 
@@ -387,17 +479,50 @@
     });
 
     const servico = document.getElementById("servico");
-    const campoTamanho = document.getElementById("campo-tamanho");
-    const campoTipoCadeira = document.getElementById("campo-tipo-cadeira");
+
+    const campoTamanhoSofa =
+        document.getElementById("campo-tamanho-sofa");
+
+    const campoTamanhoColchao =
+        document.getElementById("campo-tamanho-colchao");
+
+    const campoTamanhoTapete =
+        document.getElementById("campo-tamanho-tapete");
+
+    const campoTipoCadeira =
+        document.getElementById("campo-tipo-cadeira");
+
+    const campoOutros =
+        document.getElementById("campo-outros");
 
     servico.addEventListener("change", function() {
 
-        if (this.value === "cadeira") {
-            campoTamanho.style.display = "none";
+        campoTamanhoSofa.style.display = "none";
+        campoTamanhoColchao.style.display = "none";
+        campoTamanhoTapete.style.display = "none";
+        campoTipoCadeira.style.display = "none";
+        campoOutros.style.display = "none";
+
+        if (this.value === "sofa") {
+
+            campoTamanhoSofa.style.display = "flex";
+
+        } else if (this.value === "colchao") {
+
+            campoTamanhoColchao.style.display = "flex";
+
+        } else if (this.value === "tapete") {
+
+            campoTamanhoTapete.style.display = "flex";
+
+        } else if (this.value === "cadeira") {
+
             campoTipoCadeira.style.display = "flex";
-        } else {
-            campoTamanho.style.display = "flex";
-            campoTipoCadeira.style.display = "none";
+
+        } else if (this.value === "outros") {
+
+            campoOutros.style.display = "flex";
+
         }
 
     });
