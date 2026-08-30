@@ -3,17 +3,8 @@ body {
     font-family: Arial, sans-serif;
 }
 
-nav {
-    display: flex;
-    justify-content: flex-start;
-    padding: 20px 40px;
-    align-items: center;
-    background-color: #061b2e;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+html {
+    scroll-behavior: smooth;
 }
 
 nav {
@@ -65,9 +56,23 @@ nav a.ativo::after {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 24px;
     font-weight: bold;
     margin-right: 170px;
+    color: white;
+}
+
+.logo img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    display: block;
+}
+
+.logo span {
     color: white;
 }
 
@@ -347,10 +352,6 @@ h2 {
     box-shadow: 0 0 0 2px rgba(47, 141, 245, 0.12);
 }
 
-.campo-orcamento input {
-    width: 100%;
-}
-
 #calcular {
     height: 42px;
     padding: 0 28px;
@@ -458,49 +459,49 @@ footer {
     color: white;
 }
 
-@media (max-width: 900px) {
-    .cards-servicos {
-        flex-wrap: wrap;
-    }
-
-    .card-servico {
-        flex: 1 1 40%;
-    }
-
-    .orcamento-form {
-        flex-wrap: wrap;
-    }
-
-    .campo-orcamento {
-        flex: 1 1 40%;
-    }
-
-    #calcular {
-        flex: 1 1 100%;
-    }
-}
-
 @media (max-width: 700px) {
     nav {
-        padding: 18px 20px;
+        padding: 16px 20px 12px;
         flex-direction: column;
-        gap: 15px;
+        align-items: center;
     }
 
     .logo {
-        margin-right: 0;
+        margin: 0 0 12px;
+        justify-content: center;
+    }
+
+    .logo img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .logo span {
+        font-size: 20px;
     }
 
     .nav-links {
         width: 100%;
-        justify-content: center;
+        display: flex;
         flex-wrap: wrap;
+        justify-content: center;
+        gap: 2px 8px;
     }
 
     nav a {
-        margin-left: 5px;
-        margin-right: 5px;
-        font-size: 14px;
+        width: auto;
+        margin: 0;
+        padding: 6px 8px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    nav a::after {
+        display: none;
+    }
+
+    nav a.ativo {
+        color: #2f8df5;
     }
 
     #inicio {
@@ -509,7 +510,7 @@ footer {
 
     .inicio-texto {
         width: 100%;
-        padding: 50px 25px;
+        padding: 45px 25px;
     }
 
     .inicio-texto h1 {
@@ -528,6 +529,8 @@ footer {
     .botao-whatsapp,
     .botao-servicos {
         text-align: center;
+        box-sizing: border-box;
+        width: 100%;
     }
 
     .inicio-imagem {
@@ -543,64 +546,12 @@ footer {
         flex-direction: column;
     }
 
-    .card-servico {
-        flex: 1 1 100%;
-        width: 100%;
-    }
-
-    #orcamento {
-        padding: 45px 15px;
-    }
-
-    .caixa-orcamento {
-        padding: 18px 15px;
-    }
-
     .orcamento-form {
         flex-direction: column;
         align-items: stretch;
-        padding: 18px 15px;
     }
 
     .campo-orcamento {
         width: 100%;
-        flex: none;
-    }
-
-    #calcular {
-        width: 100%;
-        flex: none;
-    }
-
-    #sobre {
-        padding: 55px 20px;
-    }
-
-    #contato {
-        padding: 55px 20px;
-    }
-}
-
-@media (max-width: 400px) {
-    .inicio-texto h1 {
-        font-size: 34px;
-    }
-
-    #servicos h2,
-    #sobre h2,
-    #orcamento h2,
-    #contato h2 {
-        font-size: 28px;
-    }
-
-    .icone-servico {
-        width: 55px;
-        min-width: 55px;
-        height: 55px;
-    }
-
-    .icone-servico img {
-        width: 55px;
-        height: 55px;
     }
 }

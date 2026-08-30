@@ -9,7 +9,10 @@
 <body>
 
 <nav>
-    <div class="logo">Limp Service</div>
+    <div class="logo">
+        <img src="logo.png" alt="Limp Service">
+        <span>Limp Service</span>
+    </div>
 
     <div class="nav-links">
         <a href="#inicio" class="ativo">Início</a>
@@ -182,8 +185,6 @@
 
             </div>
 
-            <!-- TAMANHO DO SOFÁ -->
-
             <div class="campo-orcamento" id="campo-tamanho-sofa" style="display: none;">
 
                 <label for="tamanho-sofa">
@@ -211,8 +212,6 @@
                 </select>
 
             </div>
-
-            <!-- TAMANHO DO COLCHÃO -->
 
             <div class="campo-orcamento" id="campo-tamanho-colchao" style="display: none;">
 
@@ -246,8 +245,6 @@
 
             </div>
 
-            <!-- TAMANHO DO TAPETE -->
-
             <div class="campo-orcamento" id="campo-tamanho-tapete" style="display: none;">
 
                 <label for="tamanho-tapete">
@@ -280,8 +277,6 @@
 
             </div>
 
-            <!-- TIPO DE CADEIRA -->
-
             <div class="campo-orcamento" id="campo-tipo-cadeira" style="display: none;">
 
                 <label for="tipo-cadeira">
@@ -306,8 +301,6 @@
 
             </div>
 
-            <!-- OUTROS -->
-
             <div class="campo-orcamento" id="campo-outros" style="display: none;">
 
                 <label for="outro-servico">
@@ -321,8 +314,6 @@
                 >
 
             </div>
-
-            <!-- QUANTIDADE -->
 
             <div class="campo-orcamento">
 
@@ -338,8 +329,6 @@
                 >
 
             </div>
-
-            <!-- IMPERMEABILIZAÇÃO -->
 
             <div class="campo-orcamento">
 
@@ -439,7 +428,9 @@
 
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(link => {
+
         link.addEventListener('click', function(event) {
+
             event.preventDefault();
 
             const destino = document.querySelector(this.getAttribute('href'));
@@ -453,7 +444,10 @@
             let inicioTempo = null;
 
             function animar(tempoAtual) {
-                if (!inicioTempo) inicioTempo = tempoAtual;
+
+                if (!inicioTempo) {
+                    inicioTempo = tempoAtual;
+                }
 
                 const progresso = Math.min(
                     (tempoAtual - inicioTempo) / duracao,
@@ -472,10 +466,13 @@
                 if (progresso < 1) {
                     requestAnimationFrame(animar);
                 }
+
             }
 
             requestAnimationFrame(animar);
+
         });
+
     });
 
     const servico = document.getElementById("servico");
