@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limp Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Limp Service</div>
+
+    <div class="nav-links">
+        <a href="#inicio" class="ativo">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#orcamento">Orçamento</a>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#contato">Contato</a>
+    </div>
+</nav>
+
+<section id="inicio">
+
+    <div class="inicio-texto">
+
+        <h1>
+            Higienização que
+            <span>transforma</span>
+            seu ambiente.
+        </h1>
+
+        <p>
+            Mais saúde, conforto e bem-estar para você e sua família com a Limp Service.
+        </p>
+
+        <div class="botoes-inicio">
+
+            <a href="#contato" class="botao-whatsapp">
+                Falar no WhatsApp
+            </a>
+
+            <a href="#servicos" class="botao-servicos">
+                Ver serviços
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="inicio-imagem"></div>
+
+</section>
+
+<section id="servicos">
+
+    <h2>Nossos serviços</h2>
+
+    <div class="cards-servicos">
+
+        <div class="card-servico">
+
+            <div class="icone-servico">
+                <img src="icone-sofa.png" alt="Ícone de sofá">
+            </div>
+
+            <div class="conteudo-servico">
+                <h3>Sofá</h3>
+                <p>
+                    Higienização completa para todos os tipos de sofás.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="card-servico">
+
+            <div class="icone-servico">
+                <img src="icone-colchao.png" alt="Ícone de colchão">
+            </div>
+
+            <div class="conteudo-servico">
+                <h3>Colchão</h3>
+                <p>
+                    Limpeza e higienização para deixar seu colchão mais limpo.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="card-servico">
+
+            <div class="icone-servico">
+                <img src="icone-tapete.png" alt="Ícone de tapete">
+            </div>
+
+            <div class="conteudo-servico">
+                <h3>Tapete</h3>
+                <p>
+                    Higienização profunda para renovar e cuidar dos seus tapetes.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="card-servico">
+
+            <div class="icone-servico">
+                <img src="icone-poltrona.png" alt="Ícone de poltrona e cadeira">
+            </div>
+
+            <div class="conteudo-servico">
+                <h3>Poltronas e cadeiras</h3>
+                <p>
+                    Higienização de poltronas e cadeiras estofadas.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="sobre">
+
+    <h2>Sobre a Limp Service</h2>
+
+    <p>
+        A Limp Service trabalha com higienização de estofados,
+        oferecendo serviços para sofás, colchões, tapetes,
+        poltronas, cadeiras estofadas e outros estofados.
+    </p>
+
+</section>
+
+<section id="orcamento">
+
+    <h2>Faça seu orçamento</h2>
+
+    <p>
+        Escolha o serviço que você deseja para ter uma estimativa de orçamento.
+    </p>
+
+    <div class="caixa-orcamento">
+
+        <div class="orcamento-form">
+
+            <div class="campo-orcamento">
+
+                <label for="servico">
+                    O que você deseja higienizar?
+                </label>
+
+                <select id="servico">
+
+                    <option value="">
+                        Selecione uma opção
+                    </option>
+
+                    <option value="sofa">
+                        Sofá
+                    </option>
+
+                    <option value="colchao">
+                        Colchão
+                    </option>
+
+                    <option value="tapete">
+                        Tapete
+                    </option>
+
+                    <option value="cadeira">
+                        Cadeiras
+                    </option>
+
+                    <option value="outros">
+                        Outros
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="campo-orcamento">
+
+                <label for="tamanho">
+                    Tamanho
+                </label>
+
+                <select id="tamanho">
+
+                    <option value="">
+                        Selecione o tamanho
+                    </option>
+
+                    <option value="pequeno">
+                        Pequeno
+                    </option>
+
+                    <option value="medio">
+                        Médio
+                    </option>
+
+                    <option value="grande">
+                        Grande
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="campo-orcamento">
+
+                <label for="quantidade">
+                    Quantidade
+                </label>
+
+                <input
+                    type="number"
+                    id="quantidade"
+                    min="1"
+                    value="1"
+                >
+
+            </div>
+
+            <div class="campo-orcamento">
+
+                <label for="impermeabilizacao">
+                    Deseja impermeabilização?
+                </label>
+
+                <select id="impermeabilizacao">
+
+                    <option value="nao">
+                        Não
+                    </option>
+
+                    <option value="sim">
+                        Sim
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button id="calcular">
+                Calcular orçamento
+            </button>
+
+        </div>
+
+        <div id="resultado">
+
+            <div class="resultado-icone">
+                R$
+            </div>
+
+            <div class="resultado-texto">
+
+                <span>
+                    Orçamento estimado
+                </span>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+            <p>
+                *Valor estimado. O preço final pode variar após avaliação.
+            </p>
+
+            <a href="#" class="botao-whatsapp-orcamento">
+                Falar no WhatsApp
+            </a>
+
+        </div>
+
+        <p class="aviso-orcamento">
+            O valor apresentado é uma estimativa e pode variar após a avaliação do serviço.
+        </p>
+
+    </div>
+
+</section>
+
+<section id="contato">
+
+    <h2>Entre em contato</h2>
+
+    <p>
+        Telefone: (14) 99834-4797
+    </p>
+
+    <p>
+        Instagram: @limpservicebauru
+    </p>
+
+    <p>
+        Horário de atendimento: segunda a sexta, das 8h às 18h.
+    </p>
+
+    <p>
+        Sábado, das 8h às 13h.
+    </p>
+
+    <p>
+        Domingo: fechado.
+    </p>
+
+</section>
+
+<footer>
+
+    <p>
+        @ 2026 Limp Service. Todos os direitos reservados.
+    </p>
+
+</footer>
+
+</body>
+</html>
