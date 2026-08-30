@@ -1,0 +1,48 @@
+# Limpeza de Estofados — Visão Geral
+
+## O que é
+
+Site institucional para uma empresa de limpeza de estofados (MEI). O visitante
+vê o catálogo de serviços, pode falar direto pelo WhatsApp, ou preencher um
+formulário simples para pedir um orçamento. O responsável recebe um e-mail
+avisando de cada novo pedido e faz o contato/negociação manualmente.
+
+## O que o sistema faz (resumo)
+
+- Mostra os serviços oferecidos (nome + descrição) na página inicial
+- Galeria de fotos "antes e depois" dos trabalhos já realizados
+- Link direto pro WhatsApp do responsável
+- Formulário de orçamento: nome, telefone, cidade e tipo de serviço
+- Ao enviar, salva o pedido e manda um e-mail de notificação
+
+## Possível melhoria futura
+
+Calculadora para simular orçamento com base em dimensões do móvel e quantidade
+de lugares — estrutura ainda em definição.
+
+## Como é feito, por baixo dos panos
+
+| Parte | Tecnologia |
+|---|---|
+| Backend (API) | Java 21 + Spring Boot |
+| Banco de dados | PostgreSQL |
+| Frontend | HTML/CSS/JS puro (sem framework) |
+| Ambiente | Docker (backend + banco sobem juntos com um comando) |
+| Hospedagem | AWS, ligada só na hora de apresentar pro cliente |
+
+Frontend e backend são independentes um do outro — conversam só por uma API,
+o que permite qualquer um dos dois ser trabalhado sem depender do outro.
+
+## Estado atual do projeto
+
+- ✅ Estrutura do backend criada e rodando via Docker, junto com o banco
+- ⬜ Ainda não existem as tabelas reais do banco 
+- ⬜ Ainda não existem os endpoints da API
+- ⬜ Frontend ainda não foi iniciado
+
+## Onde encontrar mais detalhe
+
+- O que o sistema deve fazer, requisito por requisito: `docs/spec.md`
+- Como é montado por dentro (decisões técnicas, Docker, produção): `docs/architecture.md`
+- O que a API espera/devolve: `docs/api-contract.md`
+- Como contribuir (fluxo de commits, branches): `CONTRIBUTING.md`
