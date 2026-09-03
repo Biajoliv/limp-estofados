@@ -2,49 +2,53 @@ package com.limpezaestofados.backend.quote;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.limpezaestofados.backend.catalog.Servico;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import java.math.BigDecimal;
+import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/quotes")
 public class SolicitacaoController {
 
     private final SolicitacaoService solicitacaoService;
+    private final CalculadoraService calculadoraService;
 
-    public SolicitacaoController(SolicitacaoService solicitacaoService) {
+    public SolicitacaoController(SolicitacaoService solicitacaoService, CalculadoraService calculadoraService) {
         this.solicitacaoService = solicitacaoService;
+        this.calculadoraService = calculadoraService;
     }
 
     @PostMapping
     public ResponseEntity<Solicitacao> criarSolicitacao(@RequestBody SolicitacaoRequest request) {
+        Solicitacao novaSolicitacao = new Solicitacao();
+        novaSolicitacao.setNome(request.getNome());
+        novaSolicitacao.setTelefone(request.getTelefone());
+        novaSolicitacao.setCidade(request.getCidade());
 
-        Solicitacao novaSolicitacao = new Solicitacao(); // Cria uma nova instância de Solicitacao
-        novaSolicitacao.setNome(request.getNome()); // Define o nome da solicitação com base no valor recebido na
-                                                    // requisição
-        novaSolicitacao.setTelefone(request.getTelefone()); // Define o telefone da solicitação com base no valor
-                                                            // recebido na requisição
-        novaSolicitacao.setCidade(request.getCidade()); // Define a cidade da solicitação com base no valor recebido na
-                                                        // requisição
+        Servico buscaServico = new Servico();
+        buscaServico.setId(request.getServicoId());
 
-        Servico buscaServico = new Servico(); // Cria uma nova instância de Servico para associar à solicitação
-        buscaServico.setId(request.getServicoId()); // Define o ID do serviço com base no valor recebido na requisição
+        novaSolicitacao.setServico(buscaServico);
 
-        novaSolicitacao.setServico(buscaServico); // Associa o serviço à solicitação
+        Solicitacao solicitacaoSalva = solicitacaoService.criarSolicitacao(novaSolicitacao);
 
-        Solicitacao solicitacaoSalva = solicitacaoService.criarSolicitacao(novaSolicitacao); // Chama o serviço para
-                                                                                             // criar a solicitação e
-                                                                                             // salva o resultado em
-                                                                                             // solicitacaoSalva
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(solicitacaoSalva); // Retorna a resposta HTTP com status
-                                                                                 // 201 (Created) e o objeto da
-                                                                                 // solicitação salva no corpo da
-                                                                                 // resposta
+        return ResponseEntity.status(HttpStatus.CREATED).body(solicitacaoSalva);
     }
 
+    @PostMapping("/calcular")
+    public ResponseEntity<BigDecimal> calcularPreco(@RequestBody CalculoRequest request) {
+        // Agora passamos o objeto Request inteiro, o Service lida com as propriedades
+        BigDecimal valorEstimado = calculadoraService.calcularOrcamento(request);
+
+        return ResponseEntity.ok(valorEstimado);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Solicitacao>> listarTodasSolicitacoes() {
+        List<Solicitacao> lista = solicitacaoService.listarTodas();
+        return ResponseEntity.ok(lista);
+    }
 }

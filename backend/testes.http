@@ -1,0 +1,43 @@
+### Teste 1: Sofá de 2,20m COM Impermeabilização (Expectativa: R$ 360)
+POST http://localhost:8080/api/v1/quotes/calcular
+Content-Type: application/json
+
+{
+  "servicoAlvo": "sofa",
+  "tamanhoOuModelo": "2,20",
+  "incluirImpermeabilizacao": true
+}
+
+### Teste 2: Colchão Queen SEM Impermeabilização (Expectativa: R$ 160)
+POST http://localhost:8080/api/v1/quotes/calcular
+Content-Type: application/json
+
+{
+  "servicoAlvo": "colchao",
+  "tamanhoOuModelo": "queen",
+  "incluirImpermeabilizacao": false
+}
+
+### Teste 3: Tapete de 3,5 metros (Expectativa: R$ 70)
+POST http://localhost:8080/api/v1/quotes/calcular
+Content-Type: application/json
+
+{
+  "servicoAlvo": "tapete",
+  "metrosLineares": 3.5,
+  "incluirImpermeabilizacao": false
+}
+
+### Teste 4: Listar todos os pedidos salvos (Painel do Admin)
+GET http://localhost:8080/api/v1/quotes
+
+### Teste 5: Cliente confirmando e enviando o pedido para o dono
+POST http://localhost:8080/api/v1/quotes
+Content-Type: application/json
+
+{
+  "nome": "João Silva",
+  "telefone": "14999999999",
+  "cidade": "Bauru",
+  "servicoId": 1
+}
