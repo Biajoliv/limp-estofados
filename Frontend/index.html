@@ -527,6 +527,124 @@
         }
 
     });
+ const API_BASE = "http://localhost:8080/api/v1";
+
+let mapaServicos = {};
+
+function normalizar(texto) {
+    return texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
+async function carregarServicos() {
+    try {
+        const resposta = await fetch(`${API_BASE}/services`);
+        const servicos = await resposta.json();
+
+        servicos.forEach(servico => {
+            mapaServicos[normalizar(servico.nome)] = servico.id;
+        });
+    } catch (erro) {
+        console.error("Não foi possível carregar a lista de serviços:", erro);
+    }
+}
+
+carregarServicos();
+
+function montarRequisicaoDeCalculo() {
+    const servicoSelecionado = document.getElementById("servico").value;
+    const impermeabilizacao =
+        document.getElementById("impermeabilizacao").value === "sim";
+
+    const request = {
+        servicoAlvo: servicoSelecionado,
+        incluirImpermeabilizacao: impermeabilizacao
+    };
+
+    if (servicoSelecionado === "sofa") {
+        const valor = document.getElementById("tamanho-sofa").value;
+        request.tamanhoOuModelo = valor.replace(/\./g, ",");
+    }
+
+    if (servicoSelecionado === "colchao") {
+        request.tamanhoOuModelo = document.getElementById("tamanho-colchao").value;
+    }
+
+    if (servicoSelecionado === "cadeira") {
+        request.tamanhoOuModelo = document.getElementById("tipo-cadeira").value;
+    }
+
+    if (servicoSelecionado === "tapete") {
+        // Regra confirmada com o time: metrosLineares = soma dos dois lados.
+        // Só se aplica aos tamanhos fixos do <select> (1,50x2,00 até 3,00x3,50).
+        // Tapetes menores que 1,50m não têm opção aqui e são tratados via WhatsApp.
+        const valor = document.getElementById("tamanho-tapete").value;
+        const [largura, comprimento] = valor.split("x").map(Number);
+        request.metrosLineares = largura + comprimento;
+    }
+
+    return request;
+}
+
+const botaoCalcular = document.getElementById("calcular");
+const resultadoValor = document.querySelector("#resultado strong");
+const resultadoCaixa = document.getElementById("resultado");
+
+botaoCalcular.addEventListener("click", async function (event) {
+    event.preventDefault();
+
+    const servicoSelecionado = document.getElementById("servico").value;
+
+    if (!servicoSelecionado) {
+        alert("Selecione o que você deseja higienizar antes de calcular.");
+        return;
+    }
+
+    if (servicoSelecionado === "outros") {
+        resultadoValor.textContent = "Sob consulta";
+        resultadoCaixa.style.display = "flex";
+        return;
+    }
+
+    const quantidade =
+        parseInt(document.getElementById("quantidade").value) || 1;
+
+    const corpoRequisicao = montarRequisicaoDeCalculo();
+
+    botaoCalcular.disabled = true;
+    botaoCalcular.textContent = "Calculando...";
+
+    try {
+        const resposta = await fetch(`${API_BASE}/quotes/calcular`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(corpoRequisicao)
+        });
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao calcular orçamento");
+        }
+
+        const precoUnitario = await resposta.json();
+        const precoTotal = precoUnitario * quantidade;
+
+        resultadoValor.textContent =
+            "R$ " + precoTotal.toFixed(2).replace(".", ",");
+
+        resultadoCaixa.style.display = "flex"; // torna a caixa visível
+
+        window.ultimoServicoCalculado = servicoSelecionado;
+
+    } catch (erro) {
+        console.error(erro);
+        resultadoValor.textContent = "Erro ao calcular";
+    } finally {
+        botaoCalcular.disabled = false;
+        botaoCalcular.textContent = "Calcular orçamento";
+    }
+});
 </script>
 
 </body>
