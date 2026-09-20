@@ -1,651 +1,376 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Limp Service</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<nav>
-    <div class="logo">
-        <img src="logo.png" alt="Limp Service">
-        <span>Limp Service</span>
-    </div>
-
-    <div class="nav-links">
-        <a href="#inicio" class="ativo">Início</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#orcamento">Orçamento</a>
-        <a href="#sobre">Sobre nós</a>
-        <a href="#contato">Contato</a>
-    </div>
-</nav>
-
-<section id="inicio">
-
-    <div class="inicio-texto">
-
-        <h1>
-            Higienização que
-            <span>transforma</span>
-            seu ambiente.
-        </h1>
-
-        <p>
-            Mais saúde, conforto e bem-estar para você e sua família com a Limp Service.
-        </p>
-
-        <div class="botoes-inicio">
-
-            <a href="#contato" class="botao-whatsapp">
-                Falar no WhatsApp
-            </a>
-
-            <a href="#servicos" class="botao-servicos">
-                Ver serviços
-            </a>
-
+    <nav>
+        <div class="logo">
+            <img src="logo.png" alt="Limp Service">
+            <span>Limp Service</span>
         </div>
 
-    </div>
-
-    <div class="inicio-imagem"></div>
-
-</section>
-
-<section id="servicos">
-
-    <h2>Nossos serviços</h2>
-
-    <div class="cards-servicos">
-
-        <div class="card-servico">
-
-            <div class="icone-servico">
-                <img src="icone-sofa.png" alt="Ícone de sofá">
-            </div>
-
-            <div class="conteudo-servico">
-                <h3>Sofá</h3>
-                <p>
-                    Higienização completa para todos os tipos de sofás.
-                </p>
-            </div>
-
+        <div class="nav-links">
+            <a href="#inicio" class="ativo">Início</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#orcamento">Orçamento</a>
+            <a href="#sobre">Sobre nós</a>
+            <a href="#contato">Contato</a>
         </div>
-
-        <div class="card-servico">
-
-            <div class="icone-servico">
-                <img src="icone-colchao.png" alt="Ícone de colchão">
-            </div>
-
-            <div class="conteudo-servico">
-                <h3>Colchão</h3>
-                <p>
-                    Limpeza e higienização para deixar seu colchão mais limpo.
-                </p>
-            </div>
-
-        </div>
-
-        <div class="card-servico">
-
-            <div class="icone-servico">
-                <img src="icone-tapete.png" alt="Ícone de tapete">
-            </div>
-
-            <div class="conteudo-servico">
-                <h3>Tapete</h3>
-                <p>
-                    Higienização profunda para renovar e cuidar dos seus tapetes.
-                </p>
-            </div>
-
-        </div>
-
-        <div class="card-servico">
-
-            <div class="icone-servico">
-                <img src="icone-poltrona.png" alt="Ícone de poltrona">
-            </div>
-
-            <div class="conteudo-servico">
-                <h3>Poltronas</h3>
-                <p>
-                    Higienização de poltronas estofadas.
-                </p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<section id="sobre">
-
-    <h2>Sobre a Limp Service</h2>
-
-    <p>
-        A Limp Service trabalha com higienização de estofados,
-        oferecendo serviços para sofás, colchões, tapetes,
-        poltronas, cadeiras estofadas e outros estofados.
-    </p>
-
-</section>
-
-<section id="orcamento">
-
-    <h2>Faça seu orçamento</h2>
-
-    <p>
-        Escolha o serviço que você deseja para ter uma estimativa de orçamento.
-    </p>
-
-    <div class="caixa-orcamento">
-
-        <div class="orcamento-form">
-
-            <div class="campo-orcamento">
-
-                <label for="servico">
-                    O que você deseja higienizar?
-                </label>
-
-                <select id="servico">
-
-                    <option value="">
-                        Selecione uma opção
-                    </option>
-
-                    <option value="sofa">
-                        Sofá
-                    </option>
-
-                    <option value="poltrona">
-                        Poltrona
-                    </option>
-
-                    <option value="colchao">
-                        Colchão
-                    </option>
-
-                    <option value="tapete">
-                        Tapete
-                    </option>
-
-                    <option value="cadeira">
-                        Cadeiras
-                    </option>
-
-                    <option value="outros">
-                        Outros
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="campo-orcamento" id="campo-tamanho-sofa" style="display: none;">
-
-                <label for="tamanho-sofa">
-                    Tamanho do sofá
-                </label>
-
-                <select id="tamanho-sofa">
-
-                    <option value="">
-                        Selecione o tamanho
-                    </option>
-
-                    <option value="1.80-2.00">
-                        1,80 m - 2,00 m
-                    </option>
-
-                    <option value="2.20-2.50">
-                        2,20 m - 2,50 m
-                    </option>
-
-                    <option value="3.00-3.30">
-                        3,00 m - 3,30 m
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="campo-orcamento" id="campo-tamanho-colchao" style="display: none;">
-
-                <label for="tamanho-colchao">
-                    Tamanho do colchão
-                </label>
-
-                <select id="tamanho-colchao">
-
-                    <option value="">
-                        Selecione o tamanho
-                    </option>
-
-                    <option value="solteiro">
-                        Solteiro
-                    </option>
-
-                    <option value="casal">
-                        Casal padrão
-                    </option>
-
-                    <option value="queen">
-                        Queen
-                    </option>
-
-                    <option value="king">
-                        King
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="campo-orcamento" id="campo-tamanho-tapete" style="display: none;">
-
-                <label for="tamanho-tapete">
-                    Tamanho do tapete
-                </label>
-
-                <select id="tamanho-tapete">
-
-                    <option value="">
-                        Selecione o tamanho
-                    </option>
-
-                    <option value="1.50x2.00">
-                        1,50 m × 2,00 m
-                    </option>
-
-                    <option value="2.00x2.50">
-                        2,00 m × 2,50 m
-                    </option>
-
-                    <option value="2.50x3.00">
-                        2,50 m × 3,00 m
-                    </option>
-
-                    <option value="3.00x3.50">
-                        3,00 m × 3,50 m
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="campo-orcamento" id="campo-tipo-cadeira" style="display: none;">
-
-                <label for="tipo-cadeira">
-                    Tipo da cadeira
-                </label>
-
-                <select id="tipo-cadeira">
-
-                    <option value="">
-                        Selecione o tipo
-                    </option>
-
-                    <option value="assento">
-                        Só assento
-                    </option>
-
-                    <option value="assento-encosto">
-                        Assento + encosto
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="campo-orcamento" id="campo-outros" style="display: none;">
-
-                <label for="outro-servico">
-                    O que você deseja higienizar?
-                </label>
-
-                <input
-                    type="text"
-                    id="outro-servico"
-                    placeholder="Ex.: puff, cabeceira, almofada..."
-                >
-
-            </div>
-
-            <div class="campo-orcamento">
-
-                <label for="quantidade">
-                    Quantidade
-                </label>
-
-                <input
-                    type="number"
-                    id="quantidade"
-                    min="1"
-                    value="1"
-                >
-
-            </div>
-
-            <div class="campo-orcamento">
-
-                <label for="impermeabilizacao">
-                    Deseja impermeabilização?
-                </label>
-
-                <select id="impermeabilizacao">
-
-                    <option value="nao">
-                        Não
-                    </option>
-
-                    <option value="sim">
-                        Sim
-                    </option>
-
-                </select>
-
-            </div>
-
-            <button id="calcular">
-                Calcular orçamento
-            </button>
-
-        </div>
-
-        <div id="resultado">
-
-            <div class="resultado-icone">
-                R$
-            </div>
-
-            <div class="resultado-texto">
-
-                <span>
-                    Orçamento estimado
-                </span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
+    </nav>
+
+    <section id="inicio">
+        <div class="inicio-texto">
+            <h1>
+                Higienização que
+                <span>transforma</span>
+                seu ambiente.
+            </h1>
             <p>
-                *Valor estimado. O preço final pode variar após avaliação.
+                Mais saúde, conforto e bem-estar para você e sua família com a Limp Service.
             </p>
-
-            <a href="#" class="botao-whatsapp-orcamento">
-                Falar no WhatsApp
-            </a>
-
+            <div class="botoes-inicio">
+                <a href="#contato" class="botao-whatsapp">Falar no WhatsApp</a>
+                <a href="#servicos" class="botao-servicos">Ver serviços</a>
+            </div>
         </div>
+        <div class="inicio-imagem"></div>
+    </section>
 
-        <p class="aviso-orcamento">
-            O valor apresentado é uma estimativa e pode variar após a avaliação do serviço.
+    <section id="servicos">
+        <h2>Nossos serviços</h2>
+        <div class="cards-servicos">
+            <div class="card-servico">
+                <div class="icone-servico"><img src="icone-sofa.png" alt="Ícone de sofá"></div>
+                <div class="conteudo-servico">
+                    <h3>Sofá</h3>
+                    <p>Higienização completa para todos os tipos de sofás.</p>
+                </div>
+            </div>
+            <div class="card-servico">
+                <div class="icone-servico"><img src="icone-colchao.png" alt="Ícone de colchão"></div>
+                <div class="conteudo-servico">
+                    <h3>Colchão</h3>
+                    <p>Limpeza e higienização para deixar seu colchão mais limpo.</p>
+                </div>
+            </div>
+            <div class="card-servico">
+                <div class="icone-servico"><img src="icone-tapete.png" alt="Ícone de tapete"></div>
+                <div class="conteudo-servico">
+                    <h3>Tapete</h3>
+                    <p>Higienização profunda para renovar e cuidar dos seus tapetes.</p>
+                </div>
+            </div>
+            <div class="card-servico">
+                <div class="icone-servico"><img src="icone-poltrona.png" alt="Ícone de poltrona"></div>
+                <div class="conteudo-servico">
+                    <h3>Poltronas</h3>
+                    <p>Higienização de poltronas estofadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2>Sobre a Limp Service</h2>
+        <p>
+            A Limp Service trabalha com higienização de estofados,
+            oferecendo serviços para sofás, colchões, tapetes,
+            poltronas, cadeiras estofadas e outros estofados.
         </p>
+    </section>
 
-    </div>
+    <section id="orcamento">
+        <h2>Faça seu orçamento</h2>
+        <p>Escolha o serviço que você deseja para ter uma estimativa de orçamento.</p>
 
-</section>
+        <div class="caixa-orcamento">
+            <div class="orcamento-form">
+                <div class="campo-orcamento">
+                    <label for="servico">O que você deseja higienizar?</label>
+                    <select id="servico">
+                        <option value="">Selecione uma opção</option>
+                        <option value="sofa">Sofá</option>
+                        <option value="poltrona">Poltrona</option>
+                        <option value="colchao">Colchão</option>
+                        <option value="tapete">Tapete</option>
+                        <option value="cadeira">Cadeiras</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
 
-<section id="contato">
+                <div class="campo-orcamento" id="campo-tamanho-sofa" style="display: none;">
+                    <label for="tamanho-sofa">Tamanho do sofá</label>
+                    <select id="tamanho-sofa">
+                        <option value="">Selecione o tamanho</option>
+                        <option value="1.80-2.00">1,80 m - 2,00 m</option>
+                        <option value="2.20-2.50">2,20 m - 2,50 m</option>
+                        <option value="3.00-3.30">3,00 m - 3,30 m</option>
+                    </select>
+                </div>
 
-    <h2>Entre em contato</h2>
+                <div class="campo-orcamento" id="campo-tamanho-colchao" style="display: none;">
+                    <label for="tamanho-colchao">Tamanho do colchão</label>
+                    <select id="tamanho-colchao">
+                        <option value="">Selecione o tamanho</option>
+                        <option value="solteiro">Solteiro</option>
+                        <option value="casal">Casal padrão</option>
+                        <option value="queen">Queen</option>
+                        <option value="king">King</option>
+                    </select>
+                </div>
 
-    <p>
-        Telefone: (14) 99834-4797
-    </p>
+                <div class="campo-orcamento" id="campo-tamanho-tapete" style="display: none;">
+                    <label for="tamanho-tapete">Tamanho do tapete</label>
+                    <select id="tamanho-tapete">
+                        <option value="">Selecione o tamanho</option>
+                        <option value="1.50x2.00">1,50 m × 2,00 m</option>
+                        <option value="2.00x2.50">2,00 m × 2,50 m</option>
+                        <option value="2.50x3.00">2,50 m × 3,00 m</option>
+                        <option value="3.00x3.50">3,00 m × 3,50 m</option>
+                    </select>
+                </div>
 
-    <p>
-        Instagram: @limpservicebauru
-    </p>
+                <div class="campo-orcamento" id="campo-tipo-cadeira" style="display: none;">
+                    <label for="tipo-cadeira">Tipo da cadeira</label>
+                    <select id="tipo-cadeira">
+                        <option value="">Selecione o tipo</option>
+                        <option value="assento">Só assento</option>
+                        <option value="assento-encosto">Assento + encosto</option>
+                    </select>
+                </div>
 
-    <p>
-        Horário de atendimento: segunda a sexta, das 8h às 18h.
-    </p>
+                <div class="campo-orcamento" id="campo-outros" style="display: none;">
+                    <label for="outro-servico">O que você deseja higienizar?</label>
+                    <input type="text" id="outro-servico" placeholder="Ex.: puff, cabeceira, almofada...">
+                </div>
 
-    <p>
-        Sábado, das 8h às 13h.
-    </p>
+                <div class="campo-orcamento">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" id="quantidade" min="1" value="1">
+                </div>
 
-    <p>
-        Domingo: fechado.
-    </p>
+                <div class="campo-orcamento">
+                    <label for="impermeabilizacao">Deseja impermeabilização?</label>
+                    <select id="impermeabilizacao">
+                        <option value="nao">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
 
-</section>
+                <button id="calcular">Calcular orçamento</button>
+            </div>
 
-<footer>
+            <div id="resultado">
+                <div class="resultado-icone">R$</div>
+                <div class="resultado-texto">
+                    <span>Orçamento estimado</span>
+                    <strong>R$ 0,00</strong>
+                </div>
+                <p>*Valor estimado. O preço final pode variar após avaliação.</p>
+                <a href="#" class="botao-whatsapp-orcamento">Falar no WhatsApp</a>
+            </div>
 
-    <p>
-        @ 2026 Limp Service. Todos os direitos reservados.
-    </p>
+            <p class="aviso-orcamento">
+                O valor apresentado é uma estimativa e pode variar após a avaliação do serviço.
+            </p>
+        </div>
+    </section>
 
-</footer>
+    <section id="contato">
+        <h2>Entre em contato</h2>
+        <p>Telefone: (14) 99834-4797</p>
+        <p>Instagram: @limpservicebauru</p>
+        <p>Horário de atendimento: segunda a sexta, das 8h às 18h.</p>
+        <p>Sábado, das 8h às 13h.</p>
+        <p>Domingo: fechado.</p>
+    </section>
 
-<script>
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+    <footer>
+        <p>@ 2026 Limp Service. Todos os direitos reservados.</p>
+    </footer>
 
-        link.addEventListener('click', function(event) {
+    <script>
+        // Rolagem suave dos links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const destino = document.querySelector(this.getAttribute('href'));
+                if (!destino) return;
 
-            event.preventDefault();
+                const inicio = window.scrollY;
+                const fim = destino.getBoundingClientRect().top + window.scrollY;
+                const distancia = fim - inicio;
+                const duracao = 900;
+                let inicioTempo = null;
 
-            const destino = document.querySelector(this.getAttribute('href'));
-
-            if (!destino) return;
-
-            const inicio = window.scrollY;
-            const fim = destino.getBoundingClientRect().top + window.scrollY;
-            const distancia = fim - inicio;
-            const duracao = 900;
-            let inicioTempo = null;
-
-            function animar(tempoAtual) {
-
-                if (!inicioTempo) {
-                    inicioTempo = tempoAtual;
+                function animar(tempoAtual) {
+                    if (!inicioTempo) inicioTempo = tempoAtual;
+                    const progresso = Math.min((tempoAtual - inicioTempo) / duracao, 1);
+                    const suavizado = progresso < 0.5 ? 2 * progresso * progresso : 1 - Math.pow(-2 * progresso + 2, 2) / 2;
+                    window.scrollTo(0, inicio + distancia * suavizado);
+                    if (progresso < 1) requestAnimationFrame(animar);
                 }
+                requestAnimationFrame(animar);
+            });
+        });
 
-                const progresso = Math.min(
-                    (tempoAtual - inicioTempo) / duracao,
-                    1
-                );
+        // Exibição dinâmica dos campos do formulário
+        const servico = document.getElementById("servico");
+        const campoTamanhoSofa = document.getElementById("campo-tamanho-sofa");
+        const campoTamanhoColchao = document.getElementById("campo-tamanho-colchao");
+        const campoTamanhoTapete = document.getElementById("campo-tamanho-tapete");
+        const campoTipoCadeira = document.getElementById("campo-tipo-cadeira");
+        const campoOutros = document.getElementById("campo-outros");
 
-                const suavizado = progresso < 0.5
-                    ? 2 * progresso * progresso
-                    : 1 - Math.pow(-2 * progresso + 2, 2) / 2;
+        servico.addEventListener("change", function () {
+            campoTamanhoSofa.style.display = "none";
+            campoTamanhoColchao.style.display = "none";
+            campoTamanhoTapete.style.display = "none";
+            campoTipoCadeira.style.display = "none";
+            campoOutros.style.display = "none";
 
-                window.scrollTo(
-                    0,
-                    inicio + distancia * suavizado
-                );
+            if (this.value === "sofa") {
+                campoTamanhoSofa.style.display = "flex";
+            } else if (this.value === "colchao") {
+                campoTamanhoColchao.style.display = "flex";
+            } else if (this.value === "tapete") {
+                campoTamanhoTapete.style.display = "flex";
+            } else if (this.value === "cadeira") {
+                campoTipoCadeira.style.display = "flex";
+            } else if (this.value === "outros") {
+                campoOutros.style.display = "flex";
+            }
+        });
 
-                if (progresso < 1) {
-                    requestAnimationFrame(animar);
-                }
+        const API_BASE = "http://localhost:8080/api/v1";
+        let mapaServicos = {};
 
+        function normalizar(texto) {
+            return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+        async function carregarServicos() {
+            try {
+                const resposta = await fetch(`${API_BASE}/services`);
+                const servicos = await resposta.json();
+
+                servicos.forEach(servicoItem => {
+                    mapaServicos[normalizar(servicoItem.nome)] = servicoItem.id;
+                });
+            } catch (erro) {
+                console.error("Não foi possível carregar a lista de serviços:", erro);
+            }
+        }
+
+        carregarServicos();
+
+        // Mapeamento correto e ÚNICO da função de montagem da requisição
+        const CHAVE_PARA_NOME_SERVICO = {
+            sofa: "Sofá",
+            colchao: "Colchão",
+            tapete: "Tapete",
+            cadeira: "Cadeiras",
+            poltrona: "Poltrona"
+        };
+
+        function montarRequisicaoDeCalculo() {
+            const servicoSelecionado = document.getElementById("servico").value;
+            const impermeabilizacao = document.getElementById("impermeabilizacao").value === "sim";
+
+            const nomeServico = CHAVE_PARA_NOME_SERVICO[servicoSelecionado];
+            const servicoId = mapaServicos[normalizar(nomeServico)];
+
+            const request = {
+                servicoId: servicoId,
+                incluirImpermeabilizacao: impermeabilizacao
+            };
+
+            if (servicoSelecionado === "sofa") {
+                request.modelo = document.getElementById("tamanho-sofa").value.replace(/\./g, ",");
             }
 
-            requestAnimationFrame(animar);
+            if (servicoSelecionado === "colchao") {
+                request.modelo = document.getElementById("tamanho-colchao").value;
+            }
 
-        });
+            if (servicoSelecionado === "cadeira") {
+                request.modelo = document.getElementById("tipo-cadeira").value;
+            }
 
-    });
+            if (servicoSelecionado === "poltrona") {
+                request.modelo = "padrao";
+            }
 
-    const servico = document.getElementById("servico");
+            if (servicoSelecionado === "tapete") {
+                const valor = document.getElementById("tamanho-tapete").value;
+                const [largura, comprimento] = valor.split("x").map(Number);
+                request.metrosLineares = largura + comprimento;
+                request.modelo = "metro-linear";
+            }
 
-    const campoTamanhoSofa =
-        document.getElementById("campo-tamanho-sofa");
-
-    const campoTamanhoColchao =
-        document.getElementById("campo-tamanho-colchao");
-
-    const campoTamanhoTapete =
-        document.getElementById("campo-tamanho-tapete");
-
-    const campoTipoCadeira =
-        document.getElementById("campo-tipo-cadeira");
-
-    const campoOutros =
-        document.getElementById("campo-outros");
-
-    servico.addEventListener("change", function() {
-
-        campoTamanhoSofa.style.display = "none";
-        campoTamanhoColchao.style.display = "none";
-        campoTamanhoTapete.style.display = "none";
-        campoTipoCadeira.style.display = "none";
-        campoOutros.style.display = "none";
-
-        if (this.value === "sofa") {
-
-            campoTamanhoSofa.style.display = "flex";
-
-        } else if (this.value === "colchao") {
-
-            campoTamanhoColchao.style.display = "flex";
-
-        } else if (this.value === "tapete") {
-
-            campoTamanhoTapete.style.display = "flex";
-
-        } else if (this.value === "cadeira") {
-
-            campoTipoCadeira.style.display = "flex";
-
-        } else if (this.value === "outros") {
-
-            campoOutros.style.display = "flex";
-
+            return request;
         }
 
-    });
- const API_BASE = "http://localhost:8080/api/v1";
+        const botaoCalcular = document.getElementById("calcular");
+        const resultadoValor = document.querySelector("#resultado strong");
+        const resultadoCaixa = document.getElementById("resultado");
 
-let mapaServicos = {};
+        botaoCalcular.addEventListener("click", async function (event) {
+            event.preventDefault();
 
-function normalizar(texto) {
-    return texto
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
-}
+            const servicoSelecionado = document.getElementById("servico").value;
 
-async function carregarServicos() {
-    try {
-        const resposta = await fetch(`${API_BASE}/services`);
-        const servicos = await resposta.json();
+            if (!servicoSelecionado) {
+                alert("Selecione o que você deseja higienizar antes de calcular.");
+                return;
+            }
 
-        servicos.forEach(servico => {
-            mapaServicos[normalizar(servico.nome)] = servico.id;
+            if (servicoSelecionado === "outros") {
+                resultadoValor.textContent = "Sob consulta";
+                resultadoCaixa.style.display = "flex";
+                return;
+            }
+
+            const quantidade = parseInt(document.getElementById("quantidade").value) || 1;
+            const corpoRequisicao = montarRequisicaoDeCalculo();
+
+            botaoCalcular.disabled = true;
+            botaoCalcular.textContent = "Calculando...";
+
+            try {
+                const resposta = await fetch(`${API_BASE}/quotes/calcular`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(corpoRequisicao)
+                });
+
+                if (!resposta.ok) {
+                    throw new Error("Erro ao calcular orçamento");
+                }
+
+                const precoUnitario = await resposta.json();
+                const precoTotal = precoUnitario * quantidade;
+
+                resultadoValor.textContent = "R$ " + precoTotal.toFixed(2).replace(".", ",");
+                resultadoCaixa.style.display = "flex";
+                window.ultimoServicoCalculado = servicoSelecionado;
+
+            } catch (erro) {
+                console.error(erro);
+                resultadoValor.textContent = "Erro ao calcular";
+            } finally {
+                botaoCalcular.disabled = false;
+                botaoCalcular.textContent = "Calcular orçamento";
+            }
         });
-    } catch (erro) {
-        console.error("Não foi possível carregar a lista de serviços:", erro);
-    }
-}
-
-carregarServicos();
-
-function montarRequisicaoDeCalculo() {
-    const servicoSelecionado = document.getElementById("servico").value;
-    const impermeabilizacao =
-        document.getElementById("impermeabilizacao").value === "sim";
-
-    const request = {
-        servicoAlvo: servicoSelecionado,
-        incluirImpermeabilizacao: impermeabilizacao
-    };
-
-    if (servicoSelecionado === "sofa") {
-        const valor = document.getElementById("tamanho-sofa").value;
-        request.tamanhoOuModelo = valor.replace(/\./g, ",");
-    }
-
-    if (servicoSelecionado === "colchao") {
-        request.tamanhoOuModelo = document.getElementById("tamanho-colchao").value;
-    }
-
-    if (servicoSelecionado === "cadeira") {
-        request.tamanhoOuModelo = document.getElementById("tipo-cadeira").value;
-    }
-
-    if (servicoSelecionado === "tapete") {
-        // Regra confirmada com o time: metrosLineares = soma dos dois lados.
-        // Só se aplica aos tamanhos fixos do <select> (1,50x2,00 até 3,00x3,50).
-        // Tapetes menores que 1,50m não têm opção aqui e são tratados via WhatsApp.
-        const valor = document.getElementById("tamanho-tapete").value;
-        const [largura, comprimento] = valor.split("x").map(Number);
-        request.metrosLineares = largura + comprimento;
-    }
-
-    return request;
-}
-
-const botaoCalcular = document.getElementById("calcular");
-const resultadoValor = document.querySelector("#resultado strong");
-const resultadoCaixa = document.getElementById("resultado");
-
-botaoCalcular.addEventListener("click", async function (event) {
-    event.preventDefault();
-
-    const servicoSelecionado = document.getElementById("servico").value;
-
-    if (!servicoSelecionado) {
-        alert("Selecione o que você deseja higienizar antes de calcular.");
-        return;
-    }
-
-    if (servicoSelecionado === "outros") {
-        resultadoValor.textContent = "Sob consulta";
-        resultadoCaixa.style.display = "flex";
-        return;
-    }
-
-    const quantidade =
-        parseInt(document.getElementById("quantidade").value) || 1;
-
-    const corpoRequisicao = montarRequisicaoDeCalculo();
-
-    botaoCalcular.disabled = true;
-    botaoCalcular.textContent = "Calculando...";
-
-    try {
-        const resposta = await fetch(`${API_BASE}/quotes/calcular`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(corpoRequisicao)
-        });
-
-        if (!resposta.ok) {
-            throw new Error("Erro ao calcular orçamento");
-        }
-
-        const precoUnitario = await resposta.json();
-        const precoTotal = precoUnitario * quantidade;
-
-        resultadoValor.textContent =
-            "R$ " + precoTotal.toFixed(2).replace(".", ",");
-
-        resultadoCaixa.style.display = "flex"; // torna a caixa visível
-
-        window.ultimoServicoCalculado = servicoSelecionado;
-
-    } catch (erro) {
-        console.error(erro);
-        resultadoValor.textContent = "Erro ao calcular";
-    } finally {
-        botaoCalcular.disabled = false;
-        botaoCalcular.textContent = "Calcular orçamento";
-    }
-});
-</script>
-
+    </script>
 </body>
+
 </html>

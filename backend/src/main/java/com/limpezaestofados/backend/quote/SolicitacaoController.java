@@ -2,23 +2,21 @@ package com.limpezaestofados.backend.quote;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.limpezaestofados.backend.catalog.Servico;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/quotes")
 public class SolicitacaoController {
 
     private final SolicitacaoService solicitacaoService;
-    private final CalculadoraService calculadoraService;
 
-    public SolicitacaoController(SolicitacaoService solicitacaoService, CalculadoraService calculadoraService) {
+    public SolicitacaoController(SolicitacaoService solicitacaoService) {
         this.solicitacaoService = solicitacaoService;
-        this.calculadoraService = calculadoraService;
     }
 
     @PostMapping
@@ -30,25 +28,10 @@ public class SolicitacaoController {
 
         Servico buscaServico = new Servico();
         buscaServico.setId(request.getServicoId());
-
         novaSolicitacao.setServico(buscaServico);
 
         Solicitacao solicitacaoSalva = solicitacaoService.criarSolicitacao(novaSolicitacao);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitacaoSalva);
-    }
-
-    @PostMapping("/calcular")
-    public ResponseEntity<BigDecimal> calcularPreco(@RequestBody CalculoRequest request) {
-        // Agora passamos o objeto Request inteiro, o Service lida com as propriedades
-        BigDecimal valorEstimado = calculadoraService.calcularOrcamento(request);
-
-        return ResponseEntity.ok(valorEstimado);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Solicitacao>> listarTodasSolicitacoes() {
-        List<Solicitacao> lista = solicitacaoService.listarTodas();
-        return ResponseEntity.ok(lista);
     }
 }

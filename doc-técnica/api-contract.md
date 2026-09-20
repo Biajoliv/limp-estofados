@@ -9,8 +9,10 @@
 ## Convenções gerais
 
 - Prefixo de versão: `/api/v1`
-- CORS habilitado para `localhost`/`127.0.0.1` em qualquer porta (ambiente de desenvolvimento)
-- Formato de erro padrão (RFC 7807 — Problem Details), usado em toda a API:
+- CORS habilitado via `FRONTEND_URL` (variável de ambiente), com fallback para `localhost`/`127.0.0.1` em desenvolvimento
+- Sem autenticação (a API é pública, não há login ou token)
+
+- Formato de erro padrão **(alvo, ainda não implementado no código — ver aviso abaixo)**, RFC 7807 — Problem Details:
 
 ```json
 {
@@ -22,7 +24,12 @@
 }
 ```
 
-- Sem autenticação (a API é pública, não há login ou token)
+> ⚠️ **Estado real hoje:** não existe `@RestControllerAdvice` implementado ainda.
+> Erros de validação (ex: `IllegalArgumentException` lançada pelo `SolicitacaoService`
+> ou `CalculadoraService`) não são capturados, então a API retorna o erro padrão
+> do Spring (**500**, corpo genérico), não o `400` com o corpo RFC 7807 mostrado
+> abaixo. Quem for integrar o frontend deve tratar esse caso até o
+> `@RestControllerAdvice` ser implementado (ver `CHANGELOG.md`, seção Pendente).
 
 ## Endpoints
 
@@ -37,13 +44,13 @@
 [
   {
     "id": 1,
-    "nome": "Limpeza de sofá",
-    "descricao": "Limpeza profunda a seco ou com extração, remove manchas e odores."
+    "nome": "Sofá",
+    "descricao": "Higienização completa para todos os tipos de sofás."
   },
   {
     "id": 2,
-    "nome": "Limpeza de colchão",
-    "descricao": "Higienização com remoção de ácaros e manchas."
+    "nome": "Colchão",
+    "descricao": "Limpeza e higienização para deixar seu colchão mais limpo."
   }
 ]
 ```
@@ -71,35 +78,24 @@
 ```json
 {
   "id": 42,
-  "cidade": "Bauru",
+  "cidade": "São Paulo",
   "criadoEm": "2026-08-24T00:59:21.370917222",
-  "nome": "Maria",
-  "telefone": "33991811440",
+  "nome": "Maria Silva",
+  "telefone": "11999998888",
   "servico": {
     "id": 1,
-    "nome": "Limpeza de sofá",
-    "descricao": "Limpeza profunda a seco ou com extração",
+    "nome": "Sofá",
+    "descricao": "Higienização completa para todos os tipos de sofás.",
     "ativo": true
   }
 }
 ```
 
-**Response — erro de validação (400):**
+**Response — erro (hoje: 500 genérico do Spring; alvo futuro, 400 RFC 7807):**
 ```json
 {
   "type": "about:blank",
   "title": "Erro de validação",
-  "status": 400,
-  "detail": "Telefone é obrigatório",
-  "instance": "/api/v1/quotes"
-}
-```
-
-**Response — serviço inexistente/inativo (400):**
-```json
-{
-  "type": "about:blank",
-  "title": "Serviço inválido",
   "status": 400,
   "detail": "O serviço informado não existe ou não está mais disponível",
   "instance": "/api/v1/quotes"
@@ -107,6 +103,40 @@
 ```
 
 **Regras/validações relevantes:**
-- `nome`, `telefone`, `cidade` e `servicoId` são obrigatórios (RF04).
-- `servicoId` deve corresponder a um serviço existente (RN01); serviços inativos não são aceitos (RN03).
-- `consentimentoLgpd` deve ser `true` para a solicitação ser aceita (RNF04).
+- `nome`, `telefone`, `cidade` e `servicoId` são obrigatórios (RF04) — hoje sem Bean Validation, aceitos mesmo vazios (ver `CHANGELOG.md`, Pendente).
+- `servicoId` deve corresponder a um serviço existente e ativo (RN01, RN03).
+- `consentimentoLgpd` chega no payload, mas ainda **não é validado nem persistido** pelo backend (RNF04, pendente).
+
+---
+
+### POST /api/v1/quotes/calcular
+
+**Descrição:** calcula uma estimativa de preço (RF08), sem persistir nada — é só simulação.
+
+**Request:**
+```json
+{
+  "servicoId": 1,
+  "modelo": "2,20-2,50",
+  "metrosLineares": null,
+  "incluirImpermeabilizacao": false
+}
+```
+
+- `servicoId`: obrigatório, id de um serviço existente no catálogo.
+- `modelo`: obrigatório, precisa corresponder a um registro cadastrado em `precos_orcamento` para esse `servicoId` (ex: `"2,20-2,50"` para sofá, `"solteiro"`/`"casal"`/`"queen"`/`"king"` para colchão, `"padrao"` para poltrona, `"assento"`/`"assento-encosto"` para cadeira, `"metro-linear"` para tapete).
+- `metrosLineares`: obrigatório **apenas** quando o preço cadastrado para o modelo usa `unidade = "por_metro"` (hoje, só tapete).
+- `incluirImpermeabilizacao`: opcional, `false` por padrão — se `true`, dobra o valor calculado (RN06).
+
+**Response — sucesso (200):**
+```json
+180.00
+```
+(Retorna só o número, tipo `BigDecimal` serializado como JSON number — não um objeto.)
+
+**Response — erro (hoje: 500 genérico; alvo futuro, 400 RFC 7807):** ocorre quando não existe preço cadastrado para a combinação `servicoId` + `modelo`, ou quando `metrosLineares` está ausente/inválido para um serviço cobrado "por_metro".
+
+**Regras/validações relevantes:**
+- RN04: o valor retornado é uma estimativa — não vincula o preço final, que é sempre confirmado manualmente pelo responsável.
+- RN05: se a unidade cadastrada for `"por_metro"`, o preço base é multiplicado por `metrosLineares`.
+- RN06: se `incluirImpermeabilizacao = true`, o valor é dobrado.
