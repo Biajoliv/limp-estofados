@@ -53,12 +53,12 @@ Existem exatamente dois canais de contato com o visitante, sem sobreposição:
 | ID | Categoria | Descrição |
 |----|-----------|-----------|
 | RNF01 | Desempenho | A listagem do catálogo deve responder em até 300ms em condições normais de uso. |
-| RNF02 | Segurança | O formulário de orçamento, por ser público e sem autenticação, deve ter proteção básica contra abuso automatizado (honeypot). |
+| RNF02 | Segurança | O formulário de orçamento, por ser público e sem autenticação, deve ter proteção básica contra abuso automatizado (honeypot). **Dispensável no protótipo atual**, rodando local sem tráfego público real. |
 | RNF03 | Confiabilidade | O envio da notificação por e-mail é síncrono, protegido por `try/catch`: uma falha no envio é registrada em log, mas não impede que a solicitação já persistida seja considerada válida. |
 | RNF04 | Conformidade legal | O formulário deve obter consentimento explícito (checkbox) para o tratamento dos dados pessoais informados, em conformidade com a LGPD. |
 | RNF05 | Portabilidade | A aplicação (backend e banco) deve poder ser executada via Docker Compose, sem exigir configuração manual do ambiente. |
 | RNF06 | Usabilidade | O formulário de orçamento deve ser utilizável em dispositivos móveis. |
-| RNF07 | Responsividade | O layout deve se adaptar corretamente a três larguras de referência: desktop, tablet e smartphone, usando CSS puro (sem framework). Testável via ferramenta de inspeção de dispositivo do navegador (F12). |
+| RNF07 | Responsividade | O layout deve se adaptar a desktop e smartphone, usando CSS puro (sem framework). **No protótipo atual, o breakpoint de tablet é dispensado** — suficiente para a demonstração. Testável via ferramenta de inspeção de dispositivo do navegador (F12). |
 
 ## 5. Regras de Negócio
 

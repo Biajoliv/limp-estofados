@@ -42,13 +42,18 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 - Deploy sob demanda via AWS EC2 (instância única, ligada apenas para demonstrações)
 
 ### Pendente
-- Implementar `@RestControllerAdvice` com `ProblemDetail` (RFC 7807) — hoje erros ainda não seguem esse formato
-- Implementar campo honeypot no formulário/backend
 - Bean Validation nos campos obrigatórios do `SolicitacaoRequest`
 - `consentimentoLgpd` chega na API mas não é persistido nem validado
 - Endpoint para cadastro de serviço (`POST /api/v1/services`) — hoje inserido manualmente via SQL
 - Entidade/endpoint para `configuracoes_empresa` (telefone, Instagram, horários) — tabela e dados existem, backend ainda não expõe isso via API para o rodapé do frontend consumir dinamicamente
-- Breakpoint de tablet no CSS (hoje só há transição desktop → mobile em 700px; RNF07 pede 3 faixas de referência)
-- Finalizar criação e configuração da instância EC2
 - Testar envio de e-mail com credenciais SMTP reais (Gmail ou AWS SES)
 - Limpar `UPDATE`s mortos em `V2__seed_catalog_services.sql` (nunca encontram linha correspondente, inofensivos mas são código morto)
+
+### Fora do escopo do protótipo atual
+Rodando localmente via WSL/Docker, sem previsão de subir em produção agora — os
+itens abaixo não são necessários enquanto isso for verdade, e podem ser
+retomados quando o projeto for além do protótipo:
+- Formato de erro RFC 7807 (`@RestControllerAdvice`) — erros usam o formato padrão do Spring por enquanto
+- Campo honeypot no formulário — sem tráfego público real, sem risco de spam
+- Breakpoint de tablet no CSS — desktop e mobile cobrem a demonstração
+- Configuração e deploy da instância EC2

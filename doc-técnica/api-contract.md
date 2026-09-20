@@ -11,25 +11,7 @@
 - Prefixo de versão: `/api/v1`
 - CORS habilitado via `FRONTEND_URL` (variável de ambiente), com fallback para `localhost`/`127.0.0.1` em desenvolvimento
 - Sem autenticação (a API é pública, não há login ou token)
-
-- Formato de erro padrão **(alvo, ainda não implementado no código — ver aviso abaixo)**, RFC 7807 — Problem Details:
-
-```json
-{
-  "type": "about:blank",
-  "title": "Erro de validação",
-  "status": 400,
-  "detail": "Descrição legível do erro",
-  "instance": "/api/v1/quotes"
-}
-```
-
-> ⚠️ **Estado real hoje:** não existe `@RestControllerAdvice` implementado ainda.
-> Erros de validação (ex: `IllegalArgumentException` lançada pelo `SolicitacaoService`
-> ou `CalculadoraService`) não são capturados, então a API retorna o erro padrão
-> do Spring (**500**, corpo genérico), não o `400` com o corpo RFC 7807 mostrado
-> abaixo. Quem for integrar o frontend deve tratar esse caso até o
-> `@RestControllerAdvice` ser implementado (ver `CHANGELOG.md`, seção Pendente).
+- Formato de erro: padrão do Spring (JSON com `timestamp`, `status`, `error`, `path`). Um formato padronizado próprio (RFC 7807) não é necessário no protótipo — ver `CHANGELOG.md`.
 
 ## Endpoints
 
@@ -91,16 +73,7 @@
 }
 ```
 
-**Response — erro (hoje: 500 genérico do Spring; alvo futuro, 400 RFC 7807):**
-```json
-{
-  "type": "about:blank",
-  "title": "Erro de validação",
-  "status": 400,
-  "detail": "O serviço informado não existe ou não está mais disponível",
-  "instance": "/api/v1/quotes"
-}
-```
+**Response — erro (500, formato padrão do Spring):** ocorre quando o serviço informado não existe ou não está mais disponível (RN01/RN03).
 
 **Regras/validações relevantes:**
 - `nome`, `telefone`, `cidade` e `servicoId` são obrigatórios (RF04) — hoje sem Bean Validation, aceitos mesmo vazios (ver `CHANGELOG.md`, Pendente).
@@ -134,7 +107,7 @@
 ```
 (Retorna só o número, tipo `BigDecimal` serializado como JSON number — não um objeto.)
 
-**Response — erro (hoje: 500 genérico; alvo futuro, 400 RFC 7807):** ocorre quando não existe preço cadastrado para a combinação `servicoId` + `modelo`, ou quando `metrosLineares` está ausente/inválido para um serviço cobrado "por_metro".
+**Response — erro (500, formato padrão do Spring):** ocorre quando não existe preço cadastrado para a combinação `servicoId` + `modelo`, ou quando `metrosLineares` está ausente/inválido para um serviço cobrado "por_metro".
 
 **Regras/validações relevantes:**
 - RN04: o valor retornado é uma estimativa — não vincula o preço final, que é sempre confirmado manualmente pelo responsável.
