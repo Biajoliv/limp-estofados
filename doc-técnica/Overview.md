@@ -24,7 +24,7 @@ novo pedido e faz o contato/negociação manualmente.
 | Banco de dados | PostgreSQL, com schema versionado via Flyway |
 | Frontend | HTML/CSS/JS puro (sem framework) |
 | Ambiente | Docker (backend + banco sobem juntos com um comando) |
-| Hospedagem | AWS EC2, ligada só na hora de apresentar pro cliente |
+
 
 Frontend e backend são independentes um do outro — conversam só por uma API.
 
@@ -36,7 +36,7 @@ Frontend e backend são independentes um do outro — conversam só por uma API.
 - ✅ Frontend real implementado (HTML/CSS/JS puro) e integrado com a API
 - ⬜ Formato de erro (RFC 7807) e honeypot ainda não implementados no código
 - ⬜ Breakpoint de tablet no CSS (só desktop/mobile hoje)
-- ⬜ Instância EC2 ainda em configuração
+- 
 
 ## Onde encontrar mais detalhe
 
