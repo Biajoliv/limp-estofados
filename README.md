@@ -38,10 +38,10 @@ avaliações de clientes.
 
 ## Documentação
 
-- **Novo no time / sem experiência com Docker?** [`GETTING_STARTED.md`](GETTING_STARTED.md) — guia passo a passo para instalar tudo e rodar o projeto.
-- Requisitos funcionais, não funcionais e regras de negócio: [`docs/spec.md`](docs/spec.md)
-- Desenho arquitetural, Docker e produção: [`docs/architecture.md`](docs/architecture.md)
-- Contrato da API (integração com o frontend): [`docs/api-contract.md`](docs/api-contract.md)
+- Requisitos funcionais, não funcionais e regras de negócio: [`doc-técnica/Spec.md`](doc-técnica/Spec.md)
+- Desenho arquitetural, Docker e produção: [`doc-técnica/Arquitetura.md`](doc-técnica/Arquitetura.md)
+- Contrato da API (integração com o frontend): [`doc-técnica/api-contract.md`](doc-técnica/api-contract.md)
+- Histórico de mudanças: [`doc-técnica/changelog.md`](doc-técnica/changelog.md)
 
 ## Stack técnica
 
@@ -62,7 +62,7 @@ avaliações de clientes.
 ```
 
 Frontend e backend são desacoplados: o frontend consome a API REST documentada em
-`docs/api-contract.md` e pode ser hospedado separadamente do backend.
+`doc-técnica/api-contract.md` e pode ser hospedado separadamente do backend.
 
 ## Como rodar localmente
 
@@ -117,9 +117,10 @@ correspondente (ex: `FRONTEND_URL=http://localhost:8081`) antes de subir o backe
 
 A aplicação roda sob demanda em uma instância AWS EC2 (ligada apenas para
 apresentações ao cliente). Detalhes completos, incluindo rede, security group
-e rotina de uso, estão em [`docs/architecture.md`](docs/architecture.md#7-implantação-em-produção).
+e rotina de uso, estão em [`doc-técnica/Arquitetura.md`](doc-técnica/Arquitetura.md#7-produção).
 
 ## Como contribuir
 
-Ver [`CONTRIBUTING.md`](CONTRIBUTING.md) para o fluxo de branches, commits e definição
-de pronto.
+Guia de contribuição (fluxo de branches, commits, definição de pronto) ainda não
+escrito. Por ora, seguir Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`)
+para as mensagens de commit — ver [`CLAUDE.md`](CLAUDE.md).

@@ -6,12 +6,12 @@ Guia de contexto. Para detalhes completos, ver os documentos linkados em cada se
 
 Site institucional de uma empresa de limpeza de estofados (Limp Service), com
 catálogo de serviços e calculadora de estimativa de orçamento. O contato para
-fechar negócio acontece via WhatsApp. Detalhes completos em [`docs/spec.md`](docs/spec.md).
+fechar negócio acontece via WhatsApp. Detalhes completos em [`doc-técnica/Spec.md`](doc-técnica/Spec.md).
 
 > O formulário de solicitação de orçamento (nome/telefone/cidade, RF04–RF06) foi
 > **descontinuado** — o backend que o implementa (`SolicitacaoController`/
 > `SolicitacaoService`) continua no código, mas não é mais chamado pelo frontend.
-> Ver nota de mudança de escopo em `docs/spec.md`.
+> Ver nota de mudança de escopo em `doc-técnica/Spec.md`.
 
 ## Stack
 
@@ -32,8 +32,8 @@ Requer um arquivo `.env` na raiz — usar `.env.example` como modelo, incluindo
 
 ## Convenções
 
-- Commits seguem Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`) — ver [`CONTRIBUTING.md`](CONTRIBUTING.md).
-- Cada tarefa/commit relevante referencia o RF correspondente em `docs/spec.md` (ex: "RF08").
+- Commits seguem Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`).
+- Cada tarefa/commit relevante referencia o RF correspondente em `doc-técnica/Spec.md` (ex: "RF08").
 - Segredos (senhas, chaves) nunca são commitados — sempre via `.env` (fora do Git).
 - Organização por domínio, não por tipo técnico: `catalog/`, `quote/`, `calculator/`, `config/` — cada um com sua própria entidade, repository, service e controller.
 
@@ -41,7 +41,7 @@ Requer um arquivo `.env` na raiz — usar `.env.example` como modelo, incluindo
 
 - **Migrations (Flyway)**: `V1` cria as tabelas (`servicos`, `solicitacao_orcamento`); `V2` normaliza/popula o catálogo de serviços; `V3` cria `precos_orcamento` e `configuracoes_empresa`, populando os preços da calculadora. `ddl-auto=update` continua ativo (não `validate`) — isso é uma sobreposição intencional/tolerada por ora: o Flyway cria o schema real, o Hibernate só ajusta detalhes menores por cima. Pode gerar avisos inofensivos no log (tipo "constraint ... does not exist, skipping") — não é erro.
 - **Nunca usar H2 no `application.properties` principal.** Já aconteceu de alguém sobrescrever a configuração do Postgres com H2 em memória para rodar testes locais, quebrando toda a integração com Docker. Se precisar de H2 para testes automatizados, isso vai num profile separado (`application-test.properties`), nunca no arquivo principal.
-- **Envio de e-mail é síncrono** (não assíncrono): decisão consciente para reduzir complexidade, dado o volume baixo de uso esperado. Ver justificativa completa em [`docs/architecture.md`](docs/architecture.md).
+- **Envio de e-mail é síncrono** (não assíncrono): decisão consciente para reduzir complexidade, dado o volume baixo de uso esperado. Ver justificativa completa em [`doc-técnica/Arquitetura.md`](doc-técnica/Arquitetura.md).
 - **Calculadora de orçamento (RF08)**: lê preço de `precos_orcamento` via `PrecoOrcamentoRepository` — nunca usar valor fixo no Java. A estimativa não vincula o preço final (RN04).
 - **Sem autenticação** nesta fase: todos os endpoints da API são públicos. Por isso não existe (propositalmente) nenhum `GET` público que liste todas as solicitações — isso exporia dado pessoal de clientes.
 - **CORS**: origem lida de `FRONTEND_URL` no `.env`, com fallback pra `localhost`/`127.0.0.1` em desenvolvimento. Nunca usar `allowedOriginPatterns("*")`.
@@ -49,7 +49,7 @@ Requer um arquivo `.env` na raiz — usar `.env.example` como modelo, incluindo
 
 ## Onde encontrar mais
 
-- Requisitos funcionais, não funcionais e regras de negócio: [`docs/spec.md`](docs/spec.md)
-- Arquitetura, Docker e produção: [`docs/architecture.md`](docs/architecture.md)
-- Contrato da API: [`docs/api-contract.md`](docs/api-contract.md)
-- Histórico de mudanças: [`CHANGELOG.md`](CHANGELOG.md)
+- Requisitos funcionais, não funcionais e regras de negócio: [`doc-técnica/Spec.md`](doc-técnica/Spec.md)
+- Arquitetura, Docker e produção: [`doc-técnica/Arquitetura.md`](doc-técnica/Arquitetura.md)
+- Contrato da API: [`doc-técnica/api-contract.md`](doc-técnica/api-contract.md)
+- Histórico de mudanças: [`doc-técnica/changelog.md`](doc-técnica/changelog.md)
