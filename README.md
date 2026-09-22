@@ -6,7 +6,12 @@ fechar negócio acontece via WhatsApp, diretamente com o responsável.
 
 ## Status do projeto
 
-Em planejamento.
+Protótipo funcional. Backend (catálogo + calculadora de orçamento) implementado
+e rodando via Docker Compose, com migrations Flyway aplicadas automaticamente;
+frontend estático implementado, consumindo a API. Pronto para demonstração ao
+cliente — ver [`doc-técnica/changelog.md`](doc-técnica/changelog.md) para o
+histórico detalhado do que já foi entregue, corrigido e do que ainda está
+pendente.
 
 ## Índice
 
