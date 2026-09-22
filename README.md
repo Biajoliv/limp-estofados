@@ -72,6 +72,35 @@ Frontend e backend são desacoplados: o frontend consome a API REST documentada 
 3. Rodar `docker-compose up --build`
 4. A API estará disponível em `http://localhost:8080/api/v1/...`
 
+### Servindo o Frontend localmente
+
+O backend já sobe com `docker-compose up --build`, mas o `Frontend/` (HTML/CSS/JS
+estático) precisa ser servido por um servidor HTTP à parte — **não abra
+`Frontend/index.html` por duplo clique (`file://`)**. O navegador manda a
+requisição com origem `null` nesse caso, e o CORS configurado no backend
+(`CorsConfig`, variável `FRONTEND_URL`) não libera `file://`, então as
+chamadas `fetch()` para `/services` e `/quotes/calcular` falham silenciosamente.
+
+Use uma destas opções, a partir da pasta `Frontend/`:
+
+- **Live Server (VS Code):** botão direito em `index.html` → "Open with Live Server"
+  (por padrão sobe em `http://localhost:5500`, que já é a origem liberada por padrão
+  no `CorsConfig`).
+- **Script pronto neste repositório:**
+  ```bash
+  # Linux/macOS/Git Bash
+  ./Frontend/serve.sh
+
+  # Windows (cmd/PowerShell)
+  Frontend\serve.bat
+  ```
+  Ambos sobem um servidor estático na porta 5500 usando `python -m http.server` (Python 3
+  precisa estar instalado). Depois é só abrir `http://localhost:5500` no navegador.
+- **Alternativa sem Python:** `npx serve Frontend -l 5500`
+
+Se usar uma porta diferente de 5500, defina `FRONTEND_URL` no `.env` com a origem
+correspondente (ex: `FRONTEND_URL=http://localhost:8081`) antes de subir o backend.
+
 ### Rodando apenas o banco via Docker (para quem for mexer só no backend)
 
 1. Rodar `docker-compose up db` para subir apenas o PostgreSQL
