@@ -87,7 +87,7 @@ backend ainda os referenciam), mas não fazem mais parte do protótipo atual.
 | RN01 | Uma solicitação de orçamento só é válida se referenciar um serviço existente e ativo no catálogo. Só se aplica ao endpoint `POST /api/v1/quotes` (RF04–RF05, descontinuado no frontend, ainda existente no backend). | RF04, RF05 |
 | RN02 | Um serviço não pode ser excluído se já possuir solicitações de orçamento associadas; ele deve ser apenas desativado (`ativo = false`). | RF01 |
 | RN03 | Serviços inativos não aparecem no catálogo público (RF01) nem como opção selecionável na calculadora de orçamento (RF08). A parte referente ao formulário de solicitação (RF04) está sem objeto — RF04 foi descontinuado. | RF01, RF08 |
-| RN04 | O preço final do serviço é sempre confirmado manualmente pelo responsável após contato com o cliente; a calculadora (RF08) fornece apenas uma estimativa inicial, não vinculante. | RF04, RF08 |
+| RN04 | O preço final do serviço é sempre confirmado manualmente pelo responsável após contato com o cliente (via WhatsApp, RF03); a calculadora (RF08) fornece apenas uma estimativa inicial, não vinculante. | RF03, RF08 |
 | RN05 | O preço estimado pela calculadora é obtido de uma tabela de preços cadastrada (serviço + modelo); se a unidade de cobrança for "por metro", o preço é multiplicado pelos metros lineares informados. | RF08 |
 | RN06 | Se o visitante solicitar impermeabilização na estimativa, o valor calculado é dobrado. | RF08 |
 

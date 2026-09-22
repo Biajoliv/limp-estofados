@@ -17,7 +17,7 @@ fechar negócio acontece via WhatsApp. Detalhes completos em [`doc-técnica/Spec
 
 - Backend: Java 21 + Spring Boot 4.1.1 + Maven
 - Banco: PostgreSQL, gerenciado via Flyway (migrations `V1`, `V2`, `V3`)
-- Frontend: HTML/CSS/JS puro (sem framework), pasta `frontend/`, separado do backend
+- Frontend: HTML/CSS/JS puro (sem framework), pasta `Frontend/`, separado do backend
 - Containerização: Docker + Docker Compose
 
 ## Como rodar
@@ -28,7 +28,11 @@ docker compose up --build
 
 Sobe backend + banco juntos. A API responde em `http://localhost:8080`.
 Requer um arquivo `.env` na raiz — usar `.env.example` como modelo, incluindo
-`FRONTEND_URL` (origem do frontend, usada pelo CORS).
+`FRONTEND_URL` (origem do frontend, usada pelo CORS) e as variáveis de SMTP.
+
+O `Frontend/` não sobe junto — precisa ser servido à parte (Live Server,
+`Frontend/serve.sh`/`serve.bat`, ou `npx serve`). Abrir `index.html` direto
+(`file://`) quebra as chamadas `fetch()` por CORS. Ver README para detalhes.
 
 ## Convenções
 
@@ -45,7 +49,7 @@ Requer um arquivo `.env` na raiz — usar `.env.example` como modelo, incluindo
 - **Calculadora de orçamento (RF08)**: lê preço de `precos_orcamento` via `PrecoOrcamentoRepository` — nunca usar valor fixo no Java. A estimativa não vincula o preço final (RN04).
 - **Sem autenticação** nesta fase: todos os endpoints da API são públicos. Por isso não existe (propositalmente) nenhum `GET` público que liste todas as solicitações — isso exporia dado pessoal de clientes.
 - **CORS**: origem lida de `FRONTEND_URL` no `.env`, com fallback pra `localhost`/`127.0.0.1` em desenvolvimento. Nunca usar `allowedOriginPatterns("*")`.
-- **Variáveis de ambiente do banco**: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` — usadas tanto pelo `application.properties` quanto pelo `docker-compose.yml`.
+- **Variáveis de ambiente**: no `.env`, definem-se `POSTGRES_DB`/`POSTGRES_USER`/`POSTGRES_PASSWORD` (usadas pelo serviço `db` do `docker-compose.yml`, e repassadas ao `app` como `DB_NAME`/`DB_USER`/`DB_PASSWORD` — `DB_HOST`/`DB_PORT` são fixos no compose, apontando pro serviço `db`), além de `FRONTEND_URL` e `SMTP_HOST`/`SMTP_PORT`/`SMTP_USER`/`SMTP_PASSWORD`, repassadas diretamente ao `app`. Todas são lidas pelo `application.properties` (e `CorsConfig`, no caso de `FRONTEND_URL`) com fallback só para desenvolvimento local fora do Docker.
 
 ## Onde encontrar mais
 
