@@ -1,8 +1,8 @@
-# Limpeza de Estofados — Site institucional e captação de orçamentos
+# Limpeza de Estofados — Site institucional e calculadora de orçamento
 
 Site institucional para uma empresa de limpeza de estofados. Apresenta o catálogo
-de serviços oferecidos e permite que o visitante solicite um orçamento, que é
-recebido pelo responsável via notificação por e-mail para contato posterior.
+de serviços oferecidos e uma calculadora de estimativa de preço; o contato para
+fechar negócio acontece via WhatsApp, diretamente com o responsável.
 
 ## Status do projeto
 
@@ -20,15 +20,21 @@ Em planejamento.
 
 ## Contexto e objetivo
 
-O objetivo é gerar leads qualificados para uma empresa de limpeza de estofados:
-o visitante conhece os serviços oferecidos e solicita um orçamento informando
-dados básicos de contato. Não há fechamento de negócio nem pagamento dentro do
-sistema — a negociação final acontece manualmente, via WhatsApp, entre o
-responsável e o cliente.
+O objetivo é apresentar os serviços de uma empresa de limpeza de estofados e dar
+ao visitante uma estimativa de preço via calculadora. Não há fechamento de negócio
+nem pagamento dentro do sistema — a negociação final acontece manualmente, via
+WhatsApp, entre o responsável e o cliente.
 
 **Fora de escopo nesta fase:** autenticação de usuários, pagamento online, cálculo
-automático de distância/frete a partir do CEP, painel administrativo de gestão das
-solicitações, avaliações de clientes.
+automático de distância/frete a partir do CEP, painel administrativo de gestão,
+avaliações de clientes.
+
+> **Mudança de escopo:** o projeto previa originalmente um formulário de
+> solicitação de orçamento (nome/telefone/cidade + consentimento LGPD), que
+> persistia a solicitação e notificava o responsável por e-mail (RF04–RF06). O
+> time decidiu descontinuar esse fluxo e seguir só com a calculadora + WhatsApp.
+> O backend que o implementa continua no código, mas não é mais usado pelo
+> frontend — detalhes em [`doc-técnica/changelog.md`](doc-técnica/changelog.md).
 
 ## Documentação
 
@@ -42,7 +48,7 @@ solicitações, avaliações de clientes.
 - **Backend:** Java + Spring Boot (Spring Web, Spring Data JPA, Bean Validation)
 - **Banco de dados:** PostgreSQL
 - **Migrations:** Flyway
-- **Envio de e-mail:** Spring Mail (SMTP), disparo síncrono (dentro da mesma requisição)
+- **Envio de e-mail:** Spring Mail (SMTP), disparo síncrono (dentro da mesma requisição) — mantido no backend, mas **descontinuado**: sem uso pelo frontend desde que o formulário de solicitação (RF04–RF06) saiu de escopo
 - **Frontend:** HTML, CSS e JavaScript puro (sem framework), consumindo a API via `fetch`
 - **Containerização:** Docker + Docker Compose
 
@@ -52,6 +58,7 @@ solicitações, avaliações de clientes.
 [Frontend estático: HTML/CSS/JS] --HTTP/JSON--> [API Backend: Spring Boot] --JDBC--> [PostgreSQL]
                                                           |
                                                           +--> [Envio síncrono de e-mail via SMTP]
+                                                              (descontinuado, sem uso pelo frontend)
 ```
 
 Frontend e backend são desacoplados: o frontend consome a API REST documentada em

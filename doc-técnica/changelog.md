@@ -35,11 +35,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ### Decisões registradas
 - Calculadora de orçamento (RF08) confirmada em escopo, modelo "tabelado" via `precos_orcamento`, não fórmula por dimensão real
-- Envio de e-mail: síncrono (decisão final, após idas e vindas)
+- Envio de e-mail: síncrono (decisão final, após idas e vindas) — **sem efeito prático hoje**, ver descontinuação do formulário abaixo
 - Formato de erro: RFC 7807 (Problem Details) — **ainda não implementado no código** (ver Pendente)
-- Proteção do formulário via honeypot — **ainda não implementado no código** (ver Pendente)
+- Proteção do formulário via honeypot — **ainda não implementado no código** (ver Pendente); também sem objeto, ver descontinuação abaixo
 - Sem autenticação nesta fase
 - Deploy sob demanda via AWS EC2 (instância única, ligada apenas para demonstrações)
+- **Formulário de solicitação de orçamento (RF04–RF06) descontinuado**: o time decidiu seguir só com a calculadora (RF08) + WhatsApp (RF03) como canal de contato com o visitante. O backend que implementa esse fluxo (`SolicitacaoController`, `SolicitacaoService`, entidade `Solicitacao`, endpoint `POST /api/v1/quotes`) continua no código por ora, mas não é mais chamado pelo frontend — não deletar sem decisão explícita do time. Documentação atualizada em `Spec.md`, `Arquitetura.md` e `api-contract.md`.
 
 ### Pendente
 - Bean Validation nos campos obrigatórios do `SolicitacaoRequest`

@@ -41,7 +41,12 @@
 
 ---
 
-### POST /api/v1/quotes
+### POST /api/v1/quotes **[Descontinuado]**
+
+> O time decidiu descontinuar o fluxo de solicitação de orçamento (RF04–RF06) e
+> seguir só com a calculadora (`POST /quotes/calcular`, abaixo) + WhatsApp. Este
+> endpoint continua implementado no backend, mas o frontend não faz mais nenhuma
+> chamada para ele — documentado aqui só por completude/rastreabilidade.
 
 **Descrição:** registra uma nova solicitação de orçamento enviada pelo visitante.
 

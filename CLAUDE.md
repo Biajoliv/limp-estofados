@@ -5,8 +5,13 @@ Guia de contexto. Para detalhes completos, ver os documentos linkados em cada se
 ## O que é este projeto
 
 Site institucional de uma empresa de limpeza de estofados (Limp Service), com
-catálogo de serviços, calculadora de estimativa de orçamento e formulário de
-solicitação de orçamento. Detalhes completos em [`docs/spec.md`](docs/spec.md).
+catálogo de serviços e calculadora de estimativa de orçamento. O contato para
+fechar negócio acontece via WhatsApp. Detalhes completos em [`docs/spec.md`](docs/spec.md).
+
+> O formulário de solicitação de orçamento (nome/telefone/cidade, RF04–RF06) foi
+> **descontinuado** — o backend que o implementa (`SolicitacaoController`/
+> `SolicitacaoService`) continua no código, mas não é mais chamado pelo frontend.
+> Ver nota de mudança de escopo em `docs/spec.md`.
 
 ## Stack
 
