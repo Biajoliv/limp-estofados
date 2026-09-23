@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limp Service</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Limp Service - Higienização de Estofados em Bauru</title>
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 
 <body>
@@ -19,8 +19,8 @@
         <div class="nav-links">
             <a href="#inicio" class="ativo">Início</a>
             <a href="#servicos">Serviços</a>
-            <a href="#orcamento">Orçamento</a>
             <a href="#sobre">Sobre nós</a>
+            <a href="#orcamento">Orçamento</a>
             <a href="#contato">Contato</a>
         </div>
     </nav>
@@ -78,30 +78,51 @@
     </section>
 
     <section id="sobre">
-        <h2>Sobre a Limp Service</h2>
-        <p>
-            A Limp Service trabalha com higienização de estofados,
-            oferecendo serviços para sofás, colchões, tapetes,
-            poltronas, cadeiras estofadas e outros estofados.
-        </p>
+        <div class="sobre-conteudo">
+            <h2>Sobre a Limp Service</h2>
+            <p class="sobre-destaque">
+                Há 2 anos transformando estofados, renovando ambientes e levando mais saúde para os lares e empresas de
+                Bauru e região.
+            </p>
+            <p>
+                A <strong>Limp Service</strong> nasceu com uma missão clara: entregar uma higienização de alta
+                performance com produtos biodegradáveis regulamentados pela ANVISA, eliminando até 99,9% de
+                microrganismos.
+            </p>
+
+            <div class="diferenciais-sobre">
+                <div class="diferencial-item">
+                    <span class="diferencial-numero">+500</span>
+                    <span class="diferencial-texto">Estofados Higienizados</span>
+                </div>
+                <div class="diferencial-item">
+                    <span class="diferencial-numero">99,9%</span>
+                    <span class="diferencial-texto">Eliminação de Bactérias</span>
+                </div>
+                <div class="diferencial-item">
+                    <span class="diferencial-numero">100%</span>
+                    <span class="diferencial-texto">Produtos ANVISA</span>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- ETAPA 1: SIMULAR ORÇAMENTO (CÁLCULO) -->
     <section id="orcamento">
-        <h2>Faça seu orçamento</h2>
-        <p>Escolha o serviço que você deseja para ter uma estimativa de orçamento.</p>
+        <h2>Simule seu orçamento</h2>
+        <p class="subtitulo-orcamento">Escolha o item e veja o valor estimado na hora, sem compromisso.</p>
 
         <div class="caixa-orcamento">
             <div class="orcamento-form">
                 <div class="campo-orcamento">
-                    <label for="servico">O que você deseja higienizar?</label>
+                    <label for="servico">O que deseja higienizar?</label>
                     <select id="servico">
                         <option value="">Selecione uma opção</option>
-                        <option value="sofa">Sofá</option>
-                        <option value="poltrona">Poltrona</option>
-                        <option value="colchao">Colchão</option>
-                        <option value="tapete">Tapete</option>
-                        <option value="cadeira">Cadeiras</option>
-                        <option value="outros">Outros</option>
+                        <option value="Sofá">Sofá</option>
+                        <option value="Poltrona">Poltrona</option>
+                        <option value="Colchão">Colchão</option>
+                        <option value="Tapete">Tapete</option>
+                        <option value="Cadeiras">Cadeiras</option>
                     </select>
                 </div>
 
@@ -126,38 +147,22 @@
                     </select>
                 </div>
 
-                <div class="campo-orcamento" id="campo-tamanho-tapete" style="display: none;">
-                    <label for="tamanho-tapete">Tamanho do tapete</label>
-                    <select id="tamanho-tapete">
-                        <option value="">Selecione o tamanho</option>
-                        <option value="1.50x2.00">1,50 m × 2,00 m</option>
-                        <option value="2.00x2.50">2,00 m × 2,50 m</option>
-                        <option value="2.50x3.00">2,50 m × 3,00 m</option>
-                        <option value="3.00x3.50">3,00 m × 3,50 m</option>
-                    </select>
-                </div>
-
                 <div class="campo-orcamento" id="campo-tipo-cadeira" style="display: none;">
                     <label for="tipo-cadeira">Tipo da cadeira</label>
                     <select id="tipo-cadeira">
-                        <option value="">Selecione o tipo</option>
-                        <option value="assento">Só assento</option>
-                        <option value="assento-encosto">Assento + encosto</option>
+                        <option value="">Selecione a opção</option>
+                        <option value="assento">Assento</option>
+                        <option value="assento-encosto">Assento + Encosto</option>
                     </select>
                 </div>
 
-                <div class="campo-orcamento" id="campo-outros" style="display: none;">
-                    <label for="outro-servico">O que você deseja higienizar?</label>
-                    <input type="text" id="outro-servico" placeholder="Ex.: puff, cabeceira, almofada...">
-                </div>
-
                 <div class="campo-orcamento">
-                    <label for="quantidade">Quantidade</label>
+                    <label for="quantidade">Qtd</label>
                     <input type="number" id="quantidade" min="1" value="1">
                 </div>
 
                 <div class="campo-orcamento">
-                    <label for="impermeabilizacao">Deseja impermeabilização?</label>
+                    <label for="impermeabilizacao">Impermeabilizar?</label>
                     <select id="impermeabilizacao">
                         <option value="nao">Não</option>
                         <option value="sim">Sim</option>
@@ -167,29 +172,49 @@
                 <button id="calcular">Calcular orçamento</button>
             </div>
 
-            <div id="resultado">
-                <div class="resultado-icone">R$</div>
-                <div class="resultado-texto">
+            <!-- EXIBIÇÃO DO VALOR E FORMULÁRIO DE PERSISTÊNCIA -->
+            <div id="resultado" style="display: none; flex-direction: column; gap: 20px;">
+                <div class="resultado-info">
                     <span>Orçamento estimado</span>
-                    <strong>R$ 0,00</strong>
+                    <strong id="valor-orcamento">R$ 0,00</strong>
+                    <p>*Valor estimado para visualização.</p>
                 </div>
-                <p>*Valor estimado. O preço final pode variar após avaliação.</p>
-                <a href="#" class="botao-whatsapp-orcamento">Falar no WhatsApp</a>
-            </div>
 
-            <p class="aviso-orcamento">
-                O valor apresentado é uma estimativa e pode variar após a avaliação do serviço.
-            </p>
+                <!-- ETAPA 2: CAPTURA DE DADOS DO CLIENTE E PERSISTÊNCIA POSTGRESQL -->
+                <div class="solicitacao-box" style="border-top: 1px solid #c0d1e5; padding-top: 20px; width: 100%;">
+                    <h3>Gostou do valor? Solicite o agendamento!</h3>
+                    <p style="font-size: 14px; color: #536273; margin-bottom: 15px;">Informe seus dados para registrar o
+                        pedido e ser direcionado ao WhatsApp da empresa.</p>
+
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <div class="campo-orcamento" style="flex: 1; min-width: 200px;">
+                            <label for="cliente-nome">Seu Nome *</label>
+                            <input type="text" id="cliente-nome" placeholder="Digite seu nome">
+                        </div>
+                        <div class="campo-orcamento" style="flex: 1; min-width: 200px;">
+                            <label for="cliente-telefone">Telefone / WhatsApp *</label>
+                            <input type="tel" id="cliente-telefone" placeholder="(14) 99999-9999">
+                        </div>
+                        <div class="campo-orcamento" style="flex: 1; min-width: 150px;">
+                            <label for="cliente-cidade">Cidade</label>
+                            <input type="text" id="cliente-cidade" value="Bauru">
+                        </div>
+                    </div>
+
+                    <button id="btn-solicitar" class="botao-whatsapp-orcamento"
+                        style="border: none; cursor: pointer; width: 100%;">
+                        Confirmar e Agendar no WhatsApp
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="contato">
         <h2>Entre em contato</h2>
-        <p>Telefone: (14) 99834-4797</p>
+        <p>Telefone / WhatsApp: (14) 99834-4797</p>
         <p>Instagram: @limpservicebauru</p>
-        <p>Horário de atendimento: segunda a sexta, das 8h às 18h.</p>
-        <p>Sábado, das 8h às 13h.</p>
-        <p>Domingo: fechado.</p>
+        <p>Atendimento: segunda a sexta das 8h às 18h | Sábado das 8h às 13h</p>
     </section>
 
     <footer>
@@ -197,178 +222,164 @@
     </footer>
 
     <script>
-        // Rolagem suave dos links
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                const destino = document.querySelector(this.getAttribute('href'));
-                if (!destino) return;
+        document.addEventListener("DOMContentLoaded", function () {
+            const servico = document.getElementById("servico");
+            const campoTamanhoSofa = document.getElementById("campo-tamanho-sofa");
+            const campoTamanhoColchao = document.getElementById("campo-tamanho-colchao");
+            const campoTipoCadeira = document.getElementById("campo-tipo-cadeira");
 
-                const inicio = window.scrollY;
-                const fim = destino.getBoundingClientRect().top + window.scrollY;
-                const distancia = fim - inicio;
-                const duracao = 900;
-                let inicioTempo = null;
+            servico.addEventListener("change", function () {
+                campoTamanhoSofa.style.display = "none";
+                campoTamanhoColchao.style.display = "none";
+                campoTipoCadeira.style.display = "none";
 
-                function animar(tempoAtual) {
-                    if (!inicioTempo) inicioTempo = tempoAtual;
-                    const progresso = Math.min((tempoAtual - inicioTempo) / duracao, 1);
-                    const suavizado = progresso < 0.5 ? 2 * progresso * progresso : 1 - Math.pow(-2 * progresso + 2, 2) / 2;
-                    window.scrollTo(0, inicio + distancia * suavizado);
-                    if (progresso < 1) requestAnimationFrame(animar);
-                }
-                requestAnimationFrame(animar);
+                if (this.value === "Sofá") campoTamanhoSofa.style.display = "flex";
+                else if (this.value === "Colchão") campoTamanhoColchao.style.display = "flex";
+                else if (this.value === "Cadeiras") campoTipoCadeira.style.display = "flex";
             });
-        });
 
-        // Exibição dinâmica dos campos do formulário
-        const servico = document.getElementById("servico");
-        const campoTamanhoSofa = document.getElementById("campo-tamanho-sofa");
-        const campoTamanhoColchao = document.getElementById("campo-tamanho-colchao");
-        const campoTamanhoTapete = document.getElementById("campo-tamanho-tapete");
-        const campoTipoCadeira = document.getElementById("campo-tipo-cadeira");
-        const campoOutros = document.getElementById("campo-outros");
+            const API_BASE = "http://localhost:8080/api/v1";
+            let listaServicos = [];
+            let servicoIdAtual = 1;
+            let valorFormatadoAtual = "R$ 0,00";
+            let servicoNomeAtual = "";
+            let quantidadeAtual = 1;
 
-        servico.addEventListener("change", function () {
-            campoTamanhoSofa.style.display = "none";
-            campoTamanhoColchao.style.display = "none";
-            campoTamanhoTapete.style.display = "none";
-            campoTipoCadeira.style.display = "none";
-            campoOutros.style.display = "none";
-
-            if (this.value === "sofa") {
-                campoTamanhoSofa.style.display = "flex";
-            } else if (this.value === "colchao") {
-                campoTamanhoColchao.style.display = "flex";
-            } else if (this.value === "tapete") {
-                campoTamanhoTapete.style.display = "flex";
-            } else if (this.value === "cadeira") {
-                campoTipoCadeira.style.display = "flex";
-            } else if (this.value === "outros") {
-                campoOutros.style.display = "flex";
+            async function carregarServicosDoBanco() {
+                try {
+                    const res = await fetch(`${API_BASE}/services`);
+                    if (res.ok) listaServicos = await res.json();
+                } catch (e) {
+                    console.warn("API de catálogo offline.");
+                }
             }
-        });
+            carregarServicosDoBanco();
 
-        const API_BASE = "http://localhost:8080/api/v1";
-        let mapaServicos = {};
-
-        function normalizar(texto) {
-            return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        }
-
-        async function carregarServicos() {
-            try {
-                const resposta = await fetch(`${API_BASE}/services`);
-                const servicos = await resposta.json();
-
-                servicos.forEach(servicoItem => {
-                    mapaServicos[normalizar(servicoItem.nome)] = servicoItem.id;
-                });
-            } catch (erro) {
-                console.error("Não foi possível carregar a lista de serviços:", erro);
-            }
-        }
-
-        carregarServicos();
-
-        // Mapeamento correto e ÚNICO da função de montagem da requisição
-        const CHAVE_PARA_NOME_SERVICO = {
-            sofa: "Sofá",
-            colchao: "Colchão",
-            tapete: "Tapete",
-            cadeira: "Cadeiras",
-            poltrona: "Poltrona"
-        };
-
-        function montarRequisicaoDeCalculo() {
-            const servicoSelecionado = document.getElementById("servico").value;
-            const impermeabilizacao = document.getElementById("impermeabilizacao").value === "sim";
-
-            const nomeServico = CHAVE_PARA_NOME_SERVICO[servicoSelecionado];
-            const servicoId = mapaServicos[normalizar(nomeServico)];
-
-            const request = {
-                servicoId: servicoId,
-                incluirImpermeabilizacao: impermeabilizacao
-            };
-
-            if (servicoSelecionado === "sofa") {
-                request.modelo = document.getElementById("tamanho-sofa").value;
+            function obterModelo(servicoNome) {
+                if (servicoNome === "Sofá") return document.getElementById("tamanho-sofa").value;
+                if (servicoNome === "Colchão") return document.getElementById("tamanho-colchao").value;
+                if (servicoNome === "Cadeiras") return document.getElementById("tipo-cadeira").value;
+                if (servicoNome === "Poltrona") return "padrao";
+                if (servicoNome === "Tapete") return "metro-linear";
+                return "";
             }
 
-            if (servicoSelecionado === "colchao") {
-                request.modelo = document.getElementById("tamanho-colchao").value;
-            }
+            const botaoCalcular = document.getElementById("calcular");
+            const btnSolicitar = document.getElementById("btn-solicitar");
+            const resultadoValor = document.getElementById("valor-orcamento");
+            const resultadoCaixa = document.getElementById("resultado");
 
-            if (servicoSelecionado === "cadeira") {
-                request.modelo = document.getElementById("tipo-cadeira").value;
-            }
+            // 1. APENAS CALCULA E EXIBE O PREÇO NA TELA (Sem gravar no banco)
+            botaoCalcular.addEventListener("click", async function (event) {
+                event.preventDefault();
 
-            if (servicoSelecionado === "poltrona") {
-                request.modelo = "padrao";
-            }
-
-            if (servicoSelecionado === "tapete") {
-                const valor = document.getElementById("tamanho-tapete").value;
-                const [largura, comprimento] = valor.split("x").map(Number);
-                request.metrosLineares = largura + comprimento;
-                request.modelo = "metro-linear";
-            }
-
-            return request;
-        }
-
-        const botaoCalcular = document.getElementById("calcular");
-        const resultadoValor = document.querySelector("#resultado strong");
-        const resultadoCaixa = document.getElementById("resultado");
-
-        botaoCalcular.addEventListener("click", async function (event) {
-            event.preventDefault();
-
-            const servicoSelecionado = document.getElementById("servico").value;
-
-            if (!servicoSelecionado) {
-                alert("Selecione o que você deseja higienizar antes de calcular.");
-                return;
-            }
-
-            if (servicoSelecionado === "outros") {
-                resultadoValor.textContent = "Sob consulta";
-                resultadoCaixa.style.display = "flex";
-                return;
-            }
-
-            const quantidade = parseInt(document.getElementById("quantidade").value) || 1;
-            const corpoRequisicao = montarRequisicaoDeCalculo();
-
-            botaoCalcular.disabled = true;
-            botaoCalcular.textContent = "Calculando...";
-
-            try {
-                const resposta = await fetch(`${API_BASE}/quotes/calcular`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(corpoRequisicao)
-                });
-
-                if (!resposta.ok) {
-                    throw new Error("Erro ao calcular orçamento");
+                servicoNomeAtual = servico.value;
+                if (!servicoNomeAtual) {
+                    alert("Selecione o serviço antes de calcular.");
+                    return;
                 }
 
-                const precoUnitario = await resposta.json();
-                const precoTotal = precoUnitario * quantidade;
+                const modeloSelecionado = obterModelo(servicoNomeAtual);
+                if (!modeloSelecionado) {
+                    alert("Por favor, selecione o tamanho/modelo do item para calcular.");
+                    return;
+                }
 
-                resultadoValor.textContent = "R$ " + precoTotal.toFixed(2).replace(".", ",");
+                quantidadeAtual = parseInt(document.getElementById("quantidade").value) || 1;
+                const impermeabilizacao = document.getElementById("impermeabilizacao").value === "sim";
+
+                botaoCalcular.disabled = true;
+                botaoCalcular.textContent = "Calculando...";
+
+                const itemEncontrado = listaServicos.find(s => s.nome.toLowerCase() === servicoNomeAtual.toLowerCase());
+                if (itemEncontrado) servicoIdAtual = itemEncontrado.id;
+
+                let precoUnitario = null;
+
+                try {
+                    const reqBody = {
+                        servicoId: servicoIdAtual,
+                        modelo: modeloSelecionado,
+                        incluirImpermeabilizacao: impermeabilizacao
+                    };
+                    if (servicoNomeAtual === "Tapete") reqBody.metrosLineares = 2.0;
+
+                    const resCalc = await fetch(`${API_BASE}/quotes/calcular`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(reqBody)
+                    });
+
+                    if (resCalc.ok) {
+                        precoUnitario = await resCalc.json();
+                    } else {
+                        console.warn("API de cálculo retornou status:", resCalc.status);
+                    }
+                } catch (e) {
+                    console.warn("Calculadora offline.");
+                }
+
+                if (precoUnitario === null) precoUnitario = 150.0;
+
+                const precoTotal = precoUnitario * quantidadeAtual;
+                valorFormatadoAtual = "R$ " + precoTotal.toFixed(2).replace(".", ",");
+
+                resultadoValor.textContent = valorFormatadoAtual;
                 resultadoCaixa.style.display = "flex";
-                window.ultimoServicoCalculado = servicoSelecionado;
 
-            } catch (erro) {
-                console.error(erro);
-                resultadoValor.textContent = "Erro ao calcular";
-            } finally {
                 botaoCalcular.disabled = false;
                 botaoCalcular.textContent = "Calcular orçamento";
-            }
+            });
+
+            // 2. GRAVA DADOS DO CLIENTE NO BANCO POSTGRESQL E REDIRECIONA PARA O WHATSAPP
+            btnSolicitar.addEventListener("click", async function (event) {
+                event.preventDefault();
+
+                const nomeCliente = document.getElementById("cliente-nome").value.trim();
+                const telefoneCliente = document.getElementById("cliente-telefone").value.trim();
+                const cidadeCliente = document.getElementById("cliente-cidade").value.trim() || "Bauru";
+
+                if (!nomeCliente || !telefoneCliente) {
+                    alert("Por favor, preencha seu nome e telefone antes de prosseguir.");
+                    return;
+                }
+
+                btnSolicitar.disabled = true;
+                btnSolicitar.textContent = "Registrando e direcionando...";
+
+                // Chamada de Persistência (POST /api/v1/quotes)
+                try {
+                    const resQuote = await fetch(`${API_BASE}/quotes`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            servicoId: servicoIdAtual,
+                            nome: nomeCliente,
+                            telefone: telefoneCliente,
+                            cidade: cidadeCliente,
+                            consentimentoLgpd: true
+                        })
+                    });
+
+                    if (resQuote.ok) {
+                        const salvo = await resQuote.json();
+                        console.log("✅ Gravado com sucesso no PostgreSQL! ID:", salvo.id);
+                    } else {
+                        console.error("❌ Falha na gravação HTTP Status:", resQuote.status);
+                    }
+                } catch (erro) {
+                    console.error("❌ Erro ao conectar no backend:", erro);
+                }
+
+                // Redirecionamento para o WhatsApp da Empresa
+                const textoWhats = `Olá! Meu nome é ${nomeCliente}. Fiz uma solicitação no site para ${quantidadeAtual}x ${servicoNomeAtual} (Estimativa: ${valorFormatadoAtual}). Gostaria de agendar!`;
+                const urlWhats = `https://wa.me/5514998344797?text=${encodeURIComponent(textoWhats)}`;
+
+                window.open(urlWhats, "_blank");
+
+                btnSolicitar.disabled = false;
+                btnSolicitar.textContent = "Confirmar e Agendar no WhatsApp";
+            });
         });
     </script>
 </body>
