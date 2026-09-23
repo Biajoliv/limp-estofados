@@ -49,13 +49,16 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 - Deploy sob demanda via AWS EC2 (instância única, ligada apenas para demonstrações)
 - **Formulário de solicitação de orçamento (RF04–RF06) descontinuado**: o time decidiu seguir só com a calculadora (RF08) + WhatsApp (RF03) como canal de contato com o visitante. O backend que implementa esse fluxo (`SolicitacaoController`, `SolicitacaoService`, entidade `Solicitacao`, endpoint `POST /api/v1/quotes`) continua no código por ora, mas não é mais chamado pelo frontend — não deletar sem decisão explícita do time. Documentação atualizada em `Spec.md`, `Arquitetura.md` e `api-contract.md`.
 
-### Pendente
-- Bean Validation nos campos obrigatórios do `SolicitacaoRequest`
-- `consentimentoLgpd` chega na API mas não é persistido nem validado
-- Endpoint para cadastro de serviço (`POST /api/v1/services`) — hoje inserido manualmente via SQL
-- Entidade/endpoint para `configuracoes_empresa` (telefone, Instagram, horários) — tabela e dados existem, backend ainda não expõe isso via API para o rodapé do frontend consumir dinamicamente
-- Testar envio de e-mail com credenciais SMTP reais (Gmail ou AWS SES)
-- Limpar `UPDATE`s mortos em `V2__seed_catalog_services.sql` (nunca encontram linha correspondente, inofensivos mas são código morto)
+### Adicionado
+- Sincronização Dinâmica do Frontend: O index.html agora realiza chamadas a /api/v1/services no carregamento da página e mapeia dinamicamente os IDs reais das migrations V1/V2 às opções do select.
+- Fluxo em 2 Etapas: Separado o cálculo em tempo real da gravação final do cliente no banco.
+- Validação de Formulário: Adicionada verificação no frontend exigindo preenchimento de Nome e Telefone antes de persistir no PostgreSQL.
+- Tratamento de Exceções SMTP: Ajustado application.properties para suportar conexões locais sem autenticação obrigatória quando as variáveis SMTP_USER não estiverem preenchidas.
+
+### Corrigido
+- Bug Erro 400 em Calculadora: Resolvida a divergência de IDs hardcoded no frontend em relação às chaves primárias geradas pelo Flyway nas migrations V2 e V3.
+- Prevenção de Exposição de Dados: Removido o número da empresa do placeholder de telefone do cliente e eliminados fallbacks que inseriam o número institucional na tabela de solicitações.
+- Redirecionamento WhatsApp Assíncrono: Ajustado envio do POST /api/v1/quotes garantindo a gravação do registro antes da abertura da nova guia para o WhatsApp.
 
 ### Fora do escopo do protótipo atual
 Rodando localmente via WSL/Docker, sem previsão de subir em produção agora — os

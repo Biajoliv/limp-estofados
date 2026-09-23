@@ -2,27 +2,23 @@
 
 > Fonte de verdade sobre o que a API espera e devolve. Quem cuida do frontend
 > deve conseguir integrar só lendo este documento.
->
-> Alternativa a manter isso manualmente: adicionar `springdoc-openapi` ao projeto
-> Spring para gerar esta documentação automaticamente a partir do código.
 
 ## Convenções gerais
 
-- Prefixo de versão: `/api/v1`
-- CORS habilitado via `FRONTEND_URL` (variável de ambiente), com fallback para `localhost`/`127.0.0.1` em desenvolvimento
-- Sem autenticação (a API é pública, não há login ou token)
-- Formato de erro: padrão do Spring (JSON com `timestamp`, `status`, `error`, `path`). Um formato padronizado próprio (RFC 7807) não é necessário no protótipo — ver `CHANGELOG.md`.
+- Prefixo de versão: /api/v1
+- CORS habilitado via FRONTEND_URL (variável de ambiente), com fallback para localhost/127.0.0.1 em desenvolvimento (porta padrão do frontend: 5500).
+- Sem autenticação (a API é pública, não há login ou token).
+- Formato de erro: padrão do Spring (JSON com timestamp, status, error, path).
 
 ## Endpoints
 
 ### GET /api/v1/services
 
-**Descrição:** retorna a lista de serviços ativos, usada no catálogo da página inicial.
+Descrição: retorna a lista de serviços ativos cadastrados no banco de dados.
 
-**Request:** sem payload.
+Request: sem payload.
 
-**Response — sucesso (200):**
-```json
+Response — sucesso (200):
 [
   {
     "id": 1,
@@ -35,40 +31,31 @@
     "descricao": "Limpeza e higienização para deixar seu colchão mais limpo."
   }
 ]
-```
 
-**Regras/validações relevantes:** apenas serviços com `ativo = true` são retornados (RN03).
+Regras/validações relevantes: apenas serviços com ativo = true são retornados (RN03).
 
 ---
 
-### POST /api/v1/quotes **[Descontinuado]**
+### POST /api/v1/quotes
 
-> O time decidiu descontinuar o fluxo de solicitação de orçamento (RF04–RF06) e
-> seguir só com a calculadora (`POST /quotes/calcular`, abaixo) + WhatsApp. Este
-> endpoint continua implementado no backend, mas o frontend não faz mais nenhuma
-> chamada para ele — documentado aqui só por completude/rastreabilidade.
+Descrição: registra uma nova solicitação de orçamento/agendamento no banco de dados (solicitacao_orcamento).
 
-**Descrição:** registra uma nova solicitação de orçamento enviada pelo visitante.
-
-**Request:**
-```json
+Request (SolicitacaoRequest):
 {
-  "nome": "Maria Silva",
-  "telefone": "11999998888",
-  "cidade": "São Paulo",
   "servicoId": 1,
+  "nome": "Paula Santos",
+  "telefone": "3399586535",
+  "cidade": "Lençóis Paulista",
   "consentimentoLgpd": true
 }
-```
 
-**Response — sucesso (201):**
-```json
+Response — sucesso (201 / 200):
 {
-  "id": 42,
-  "cidade": "São Paulo",
-  "criadoEm": "2026-08-24T00:59:21.370917222",
-  "nome": "Maria Silva",
-  "telefone": "11999998888",
+  "id": 4,
+  "cidade": "Lençóis Paulista",
+  "criadoEm": "2026-09-23T22:10:00.123",
+  "nome": "Paula Santos",
+  "telefone": "3399586535",
   "servico": {
     "id": 1,
     "nome": "Sofá",
@@ -76,45 +63,33 @@
     "ativo": true
   }
 }
-```
 
-**Response — erro (500, formato padrão do Spring):** ocorre quando o serviço informado não existe ou não está mais disponível (RN01/RN03).
+Response — erro (400 / 500): ocorre quando o servicoId informado não existe ou não está ativo na base de dados.
 
-**Regras/validações relevantes:**
-- `nome`, `telefone`, `cidade` e `servicoId` são obrigatórios (RF04) — hoje sem Bean Validation, aceitos mesmo vazios (ver `CHANGELOG.md`, Pendente).
-- `servicoId` deve corresponder a um serviço existente e ativo (RN01, RN03).
-- `consentimentoLgpd` chega no payload, mas ainda **não é validado nem persistido** pelo backend (RNF04, pendente).
+Regras/validações relevantes:
+- nome, telefone, cidade e servicoId são obrigatórios no formulário.
+- servicoId deve corresponder ao ID primário de um serviço ativo gerado pelas migrations do Flyway (V1/V2).
+- A persistência é realizada diretamente na tabela solicitacao_orcamento do PostgreSQL.
 
 ---
 
 ### POST /api/v1/quotes/calcular
 
-**Descrição:** calcula uma estimativa de preço (RF08), sem persistir nada — é só simulação.
+Descrição: calcula a estimativa do valor com base na tabela de preços (precos_orcamento), sem persistir nada no banco.
 
-**Request:**
-```json
+Request (CalculoRequest):
 {
   "servicoId": 1,
-  "modelo": "2,20-2,50",
-  "metrosLineares": null,
+  "modelo": "1.80-2.00",
   "incluirImpermeabilizacao": false
 }
-```
 
-- `servicoId`: obrigatório, id de um serviço existente no catálogo.
-- `modelo`: obrigatório, precisa corresponder a um registro cadastrado em `precos_orcamento` para esse `servicoId` (ex: `"2,20-2,50"` para sofá, `"solteiro"`/`"casal"`/`"queen"`/`"king"` para colchão, `"padrao"` para poltrona, `"assento"`/`"assento-encosto"` para cadeira, `"metro-linear"` para tapete).
-- `metrosLineares`: obrigatório **apenas** quando o preço cadastrado para o modelo usa `unidade = "por_metro"` (hoje, só tapete).
-- `incluirImpermeabilizacao`: opcional, `false` por padrão — se `true`, dobra o valor calculado (RN06).
+- servicoId: ID numérico do serviço no PostgreSQL.
+- modelo: string que corresponde exatamente ao modelo cadastrado em precos_orcamento (ex.: "1.80-2.00", "2.20-2.50", "solteiro", "casal", "assento", "padrao").
+- incluirImpermeabilizacao: booleano (true/false). Se true, o valor base é dobrado (RN06).
 
-**Response — sucesso (200):**
-```json
-180.00
-```
-(Retorna só o número, tipo `BigDecimal` serializado como JSON number — não um objeto.)
+Response — sucesso (200):
+150.00
+(Retorna um número BigDecimal/Double serializado em JSON).
 
-**Response — erro (500, formato padrão do Spring):** ocorre quando não existe preço cadastrado para a combinação `servicoId` + `modelo`, ou quando `metrosLineares` está ausente/inválido para um serviço cobrado "por_metro".
-
-**Regras/validações relevantes:**
-- RN04: o valor retornado é uma estimativa — não vincula o preço final, que é sempre confirmado manualmente pelo responsável.
-- RN05: se a unidade cadastrada for `"por_metro"`, o preço base é multiplicado por `metrosLineares`.
-- RN06: se `incluirImpermeabilizacao = true`, o valor é dobrado.
+Response — erro (400 Bad Request): ocorre se a combinação servicoId + modelo não estiver cadastrada na tabela precos_orcamento.

@@ -2,93 +2,69 @@
 
 ## 1. Componentes
 
-```
 [Frontend estático: HTML/CSS/JS] --fetch()/JSON--> [Backend: Spring Boot API REST]
                                                        (Spring Data JPA / Hibernate)
                                                               |
                                                               | JDBC
                                                               v
                                                         [PostgreSQL]
-                                                              |
-                                                              +--> [E-mail via SMTP, síncrono]
-```
 
-### RF → componente responsável
+### RF -> Componente responsável
 
 | RF | Descrição | Componente(s) |
 |---|---|---|
-| RF01 | Listar catálogo de serviços | Backend (`GET /services`) + Banco |
+| RF01 | Listar catálogo de serviços | Backend (GET /api/v1/services) + Banco |
 | RF02 | Exibir nome/descrição do serviço | Frontend |
-| RF03 | Link de contato via WhatsApp | Frontend (estático) |
-| RF04 **[Descontinuado]** | Enviar solicitação de orçamento | Backend + Banco (endpoint mantido, não consumido pelo Frontend) |
-| RF05 **[Descontinuado]** | Persistir a solicitação | Backend + Banco (endpoint mantido, não consumido pelo Frontend) |
-| RF06 **[Descontinuado]** | Notificar responsável por e-mail | Backend + SMTP (endpoint mantido, não consumido pelo Frontend) |
-| RF07 | Galeria antes/depois | Frontend (imagens estáticas) |
-| RF08 | Calculadora de estimativa de preço | Frontend + Backend (`POST /quotes/calcular`) + Banco (tabela de preços) |
+| RF03 | Link de contato via WhatsApp | Frontend (com mensagem parametrizada) |
+| RF04 | Enviar solicitação de orçamento | Frontend + Backend (POST /api/v1/quotes) |
+| RF05 | Persistir a solicitação | Backend + Banco (solicitacao_orcamento) |
+| RF07 | Galeria antes/depois | Frontend (estático) |
+| RF08 | Calculadora de estimativa de preço | Frontend + Backend (POST /api/v1/quotes/calcular) + Banco (precos_orcamento) |
 
 ## 2. Decisões-chave
 
 | Decisão | Por quê |
 |---|---|
-| Frontend e backend desacoplados (API REST, sem SSR) | Um contrato de API bem definido (`api-contract.md`) permite que frontend e backend evoluam de forma independente. |
-| Catálogo (`Servico`) em banco, não hardcoded | Há chance real de mudar a lista de serviços; evita precisar de deploy para isso. |
-| Sem autenticação nesta fase | Público-alvo é o visitante geral, sem necessidade de conta. |
-| E-mail de notificação **síncrono** **[RF06, descontinuado]** | Volume baixo (~20 acessos/dia) não justifica a complexidade de `@Async`/evento. Protegido por `try/catch`: falha no envio não derruba a solicitação já persistida. Decisão mantida como registro histórico; sem efeito prático hoje, pois o fluxo que a usa não é mais acionado pelo frontend. |
-| Honeypot em vez de rate limiting **[RNF02, descontinuado]** | Volume baixo torna rate limiting dedicado desnecessário. Sem objeto — o formulário que precisaria dessa proteção foi descontinuado. |
-| Formato de erro **RFC 7807 (Problem Details)** | Padrão HTTP formal para erros, via `@RestControllerAdvice` + `ProblemDetail`. |
-| `Dockerfile` multi-stage | Builda dentro do próprio container; evita artefato desatualizado por esquecimento de `mvn package` manual. |
-| `docker-compose`: healthcheck no banco + `depends_on: condition: service_healthy` | Evita o container da aplicação crashar na primeira tentativa de conexão com o banco. |
-| Calculadora de orçamento (RF08) **confirmada em escopo**, com tabela de preços no banco | Modelo "tabelado" (não fórmula por dimensão real) — mais simples de manter, atualizável sem deploy. Ver seção 4 (modelo de dados) e RN05/RN06. |
+| Mapeamento Dinâmico no Frontend | As opções do formulário lêem os IDs reais de /api/v1/services no carregamento da página, evitando erros HTTP 400 por ID fixo em desconformidade com o banco. |
+| Separação do Fluxo em 2 Etapas | Etapa 1 calcula e apresenta a estimativa ao visitante; Etapa 2 recolhe dados pessoais, persiste no PostgreSQL e redireciona ao WhatsApp. |
+| Foco em Conversão via WhatsApp | Remoção de serviços de e-mail para simplificar a arquitetura e garantir atendimento direto e imediato via WhatsApp. |
+| Containerização | Docker Compose gerencia a subida do banco PostgreSQL 16 e do container Spring Boot em rede unificada. |
+| Implantação em Produção (AWS EC2) | Servidor em nuvem dedicado na AWS executando o ambiente Docker completo de forma isolada, resiliente e de baixo custo. |
 
-## 3. Fluxo crítico: solicitação de orçamento **[Descontinuado]**
+## 3. Fluxo de Execução e Persistência
 
-> O time decidiu seguir só com a calculadora (seção 3.1) + WhatsApp como canal de
-> contato. Este fluxo (RF04–RF06) não é mais acionado pelo frontend; o backend
-> que o implementa continua no código, mantido por ora, mas sem uso. Ver
-> `Spec.md` seção 1 para a nota de mudança de escopo.
+1. Simulação (Cálculo):
+   - O visitante escolhe o serviço e o tamanho/modelo.
+   - Chamada POST /api/v1/quotes/calcular.
+   - O backend lê a tabela precos_orcamento e devolve a estimativa na interface (sem salvar dados).
 
-1. `POST /api/v1/quotes` com nome, telefone, cidade, serviço e campo honeypot.
-2. Honeypot preenchido → descarta silenciosamente.
-3. Valida formato (Bean Validation) e RN01 (serviço deve existir e estar ativo).
-4. Persiste a solicitação.
-5. Envia e-mail de notificação, dentro de `try/catch` — falha é logada, não impede a resposta.
-6. Responde ao visitante.
+2. Gravação e WhatsApp:
+   - O visitante preenche Nome, Telefone e Cidade.
+   - O frontend envia POST /api/v1/quotes gravando o registro em solicitacao_orcamento.
+   - Em seguida, redireciona o utilizador para a conversa do WhatsApp com a mensagem formatada contendo o resumo da simulação.
 
-## 3.1 Fluxo: calculadora de orçamento (RF08)
+## 4. Modelo de Dados
 
-1. `POST /api/v1/quotes/calcular` com `servicoId`, `modelo` (e `metrosLineares`/`incluirImpermeabilizacao`, quando aplicável).
-2. Backend busca o preço em `precos_orcamento` pela combinação `servico_id` + `modelo`.
-3. Se a unidade for `por_metro`, multiplica pelo valor de `metrosLineares`.
-4. Se `incluirImpermeabilizacao = true`, dobra o valor.
-5. Retorna o valor estimado — **não** persiste nada (é só simulação, RN04).
+- servicos: id (BIGSERIAL), nome (VARCHAR), descricao (TEXT), ativo (BOOLEAN).
+- solicitacao_orcamento: id (BIGSERIAL), servico_id (BIGINT, FK), nome (VARCHAR), telefone (VARCHAR), cidade (VARCHAR), criado_em (TIMESTAMP).
+- precos_orcamento: id (BIGSERIAL), servico_id (BIGINT, FK), modelo (VARCHAR), preco_base (NUMERIC), unidade (VARCHAR), ativo (BOOLEAN).
 
-## 4. Modelo de dados
+## 5. Infraestrutura e Implantação em Produção (AWS EC2)
 
-- **Servico**: `id`, `nome`, `descricao`, `ativo`
-- **SolicitacaoOrcamento** **[Descontinuado]**: `id`, `nome`, `telefone`, `cidade`, `servico_id` (FK), `criado_em`. Tabela e entidade mantidas, sem escrita pelo frontend atual (ver seção 3).
-- **PrecoOrcamento** (novo, suporta RF08): `id`, `servico_id` (FK), `modelo`, `preco_base`, `unidade` (`fixo` | `por_metro`), `ativo`. Restrição de unicidade em (`servico_id`, `modelo`).
+### 5.1 Especificação do Servidor (AWS EC2)
+- Instância: Amazon EC2 (Ubuntu 22.04 LTS ou Amazon Linux 2023).
+- Tipo recomendado: t3.micro ou t3.small (suficiente para o volume do protótipo/produção inicial).
+- Armazenamento: 20 GB a 30 GB EBS gp3.
 
-## 5. Integração Frontend ↔ Backend
+### 5.2 Segurança (Security Group / Firewall)
+- Porta 22 (SSH): Apenas para o IP do administrador do sistema.
+- Porta 80 (HTTP): Aberta para tráfego público web.
+- Porta 443 (HTTPS): Aberta para tráfego seguro com certificado SSL (Certbot / Let's Encrypt).
+- Porta 8080 (Backend) e 5432 (PostgreSQL): Bloqueadas para acesso externo público (comunicação interna via rede Docker).
 
-Contrato completo em [`api-contract.md`](api-contract.md). Prefixo `/api/v1`; erro padronizado
-RFC 7807; CORS configurado no backend — origem deve vir de variável de ambiente
-(`FRONTEND_URL`), não hardcoded, para funcionar tanto em desenvolvimento local
-quanto quando o frontend for hospedado externamente.
-
-## 6. Docker
-
-Backend + PostgreSQL via `docker-compose`, credenciais via `.env`. `app` usa
-`depends_on: condition: service_healthy` no banco. Dockerfile multi-stage.
-
-## 7. Produção
-
-AWS EC2 sob demanda — ligada só para apresentações ao cliente. Instância única
-(t3.micro), VPC padrão, sem NAT Gateway, sem RDS (Postgres em container na mesma
-instância). Security Group liberando só as portas necessárias.
-
-## 8. Riscos
-
-- Envio de e-mail síncrono adiciona latência; aceitável no volume atual (sem efeito prático hoje — fluxo RF04–RF06 descontinuado, não acionado pelo frontend).
-- EC2 única ligada/desligada manualmente não serve para disponibilidade contínua.
-- Tabela `precos_orcamento` mantida manualmente (sem painel administrativo) — atualizar preços exige acesso direto ao banco.
-- Estimativa da calculadora (RF08) pode divergir do preço final negociado — reforçar isso na UI para não gerar expectativa equivocada no cliente (RN04).
+### 5.3 Arquitetura de Deploy no EC2
+1. O servidor EC2 instala o Docker Engine e Docker Compose.
+2. O arquivo docker-compose.yml orquestra o banco PostgreSQL e o Backend Spring Boot na mesma rede privada virtual do Docker.
+3. Um servidor Nginx atua como Proxy Reverso no EC2, recebendo as requisições HTTPS do domínio (ex.: https://limpservice.com.br) e redirecionando internamente para:
+   - Arquivos estáticos do Frontend (/var/www/html ou porta 5500).
+   - Chamadas de API REST para o container Spring Boot (http://localhost:8080/api/v1).
